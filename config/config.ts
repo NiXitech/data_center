@@ -340,7 +340,7 @@ export default defineConfig({
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
   define: {
-    API_REQUEST_URL: "https://api.nxglabs.io/",
+    API_REQUEST_URL: "https://real-sandbox-env-382550828.us-east-1.elb.amazonaws.com",
   },
   manifest: {
     basePath: '/',
