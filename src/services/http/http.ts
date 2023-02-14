@@ -6,6 +6,8 @@ import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
 import _ from "lodash";
 import { history } from "umi";
+import Qs from "qs";
+
 // import { LoginUserCookie } from "../cooike/cookie";
 import { SStorage } from "../cooike/storage";
 
@@ -16,44 +18,24 @@ axios.defaults.baseURL = API_REQUEST_URL;
 /**
  * http request 拦截器
  */
+
 axios.interceptors.request.use(
   (config) => {
-    console.log("%c🀅 config", "color: #731d1d; font-size: 20px;", config);
-    let cookies: any = "";
-    if (config.url !== "/user/v1/login-register") {
-      if (config.url !== "/upload/v1/photo") {
-        // cookies = LoginUserCookie();
-        cookies = SStorage.get("accessToken");
-        config.data = JSON.stringify(config.data);
-        config.headers = {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          // "device-type": " ios",
-          // "device-id": " 3013f55522044e37899c13fc57adcb2d",
-          // "app-version": " 1.0.0",
-          // "x-req-encrypt": " 0",
-          // postman: 1,
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMzMxYjlmYTMtNjEzNC00MjlhLThlN2MtMWE4ZTE3MWQ5MzBmIiwiZGlkIjoiaWRiMTdlZDFhOS02MjZlLTQ1ZjEtOWY4MS1iYWE1NmI2MjhkZmUiLCJkdHlwZSI6ImFuZHJvaWQiLCJhcHAiOiJjb20ucmVhbC5pb3MiLCJleHAiOjE2NzgzNTQ4MjgsImlhdCI6MTY3NTc2MjgyOH0.YINnSanmXQomF8ay-zR4nHbWs9ZQpyXHBmWxcSm6khA',
-          // Authorization: `Bearer ${cookies ? (cookies ? cookies : "") : ""}`,
-        };
-      }
-    } else {
-      console.log("%c🀆 ", "color: #997326; font-size: 20px;", 12121212121);
+    if (config.url === "/wallet/v1/exchange/backend") {
+      // cookies = LoginUserCookie();
+      // cookies = SStorage.get("accessToken");
+      // config.data = JSON.stringify(config.data);
       config.headers = {
-        "Content-Type": " application/json",
-        "device-type": " ios",
-        "device-id": " 3013f55522044e37899c13fc57adcb2d",
-        "app-version": " 1.0.0",
-        "x-req-encrypt": " 0",
-        "Access-Control-Allow-Origin": "*",
-        postman: 1,
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTVkNjA2OWItNTM0MC00YzFmLTg1ZjEtOGVmYjFlNTFhN2RiIiwiZGlkIjoiNzZkZGUyZDM4MWQ0NGFjZGI3MWQ0OTYzYmI5ZGViN2UiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc4NjA0Mzk2LCJpYXQiOjE2NzYwMTIzOTZ9.FqSyYGSnxgAWzAHHSkXFyg9uN95KIUTbi1XoIHSXb3k",
+        // Authorization: `Bearer ${cookies ? (cookies ? cookies : "") : ""}`,
       };
     }
 
     return config;
   },
   (error) => {
-    console.log("%c🀂 error", "color: #006dcc; font-size: 20px;", error);
     if (error.response.data.code === 401) {
       history.push("/user/login");
     }
@@ -66,12 +48,10 @@ axios.interceptors.request.use(
  */
 axios.interceptors.response.use(
   (response) => {
-    console.log("%c🀅 response", "color: #007300; font-size: 20px;", response);
     if (response.data.errCode === 2) {
       console.log("过期");
     }
     if (response.data.code === 401) {
-      console.log("%c⧭token 错误", "color: #cc0088");
       history.push("/user/login");
       return response;
     }
@@ -103,6 +83,7 @@ export function get(url: string, params = {}, config: AxiosRequestConfig = {}) {
         }
       })
       .catch((error) => {
+        console.log("%c🀀 error", "color: #00a3cc; font-size: 20px;", error);
         reject(error);
       });
   });

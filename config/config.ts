@@ -1,8 +1,8 @@
 // https://umijs.org/config/
-import { defineConfig } from 'umi';
-import { join } from 'path';
-import defaultSettings from './defaultSettings';
-import proxy from './proxy';
+import { defineConfig } from "umi";
+import { join } from "path";
+import defaultSettings from "./defaultSettings";
+import proxy from "./proxy";
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
@@ -18,13 +18,13 @@ export default defineConfig({
   },
   locale: {
     // default zh-CN
-    default: 'zh-CN',
+    default: "zh-CN",
     antd: true,
     // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: true,
   },
   dynamicImport: {
-    loading: '@ant-design/pro-layout/es/PageLoading',
+    loading: "@ant-design/pro-layout/es/PageLoading",
   },
   targets: {
     ie: 11,
@@ -32,74 +32,74 @@ export default defineConfig({
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
-      path: '/user',
+      path: "/user",
       layout: false,
       routes: [
         {
-          path: '/user/login',
+          path: "/user/login",
           layout: false,
-          name: 'login',
-          component: './user/Login',
+          name: "login",
+          component: "./user/Login",
         },
         {
-          path: '/user',
-          redirect: '/user/login',
+          path: "/user",
+          redirect: "/user/login",
         },
         {
-          name: 'register-result',
-          icon: 'smile',
-          path: '/user/register-result',
-          component: './user/register-result',
+          name: "register-result",
+          icon: "smile",
+          path: "/user/register-result",
+          component: "./user/register-result",
         },
         {
-          name: 'register',
-          icon: 'smile',
-          path: '/user/register',
-          component: './user/register',
+          name: "register",
+          icon: "smile",
+          path: "/user/register",
+          component: "./user/register",
         },
         {
-          component: '404',
+          component: "404",
         },
       ],
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      icon: 'dashboard',
+      path: "/dashboard",
+      name: "dashboard",
+      icon: "dashboard",
       routes: [
         {
-          path: '/dashboard',
-          redirect: '/dashboard/analysis',
+          path: "/dashboard",
+          redirect: "/dashboard/analysis",
         },
         {
-          name: 'analysis',
-          icon: 'smile',
-          path: '/dashboard/analysis',
-          component: './dashboard/analysis',
+          name: "analysis",
+          icon: "smile",
+          path: "/dashboard/analysis",
+          component: "./dashboard/analysis",
         },
         {
-          name: 'monitor',
-          icon: 'smile',
-          path: '/dashboard/monitor',
-          component: './dashboard/monitor',
+          name: "monitor",
+          icon: "smile",
+          path: "/dashboard/monitor",
+          component: "./dashboard/monitor",
         },
         {
-          name: 'overview',
-          icon: 'smile',
-          path: '/dashboard/overview',
-          component: './dashboard/overview',
+          name: "overview",
+          icon: "smile",
+          path: "/dashboard/overview",
+          component: "./dashboard/overview",
         },
         {
-          name: 'exchange',
-          icon: 'smile',
-          path: '/dashboard/exchange',
-          component: './dashboard/exchange',
+          name: "exchange",
+          icon: "smile",
+          path: "/dashboard/exchange",
+          component: "./dashboard/exchange",
         },
         {
-          name: 'workplace',
-          icon: 'smile',
-          path: '/dashboard/workplace',
-          component: './dashboard/workplace',
+          name: "workplace",
+          icon: "smile",
+          path: "/dashboard/workplace",
+          component: "./dashboard/workplace",
         },
       ],
     },
@@ -318,11 +318,11 @@ export default defineConfig({
     //   ],
     // },
     {
-      path: '/',
-      redirect: '/dashboard/monitor',
+      path: "/",
+      redirect: "/dashboard/monitor",
     },
     {
-      component: '404',
+      component: "404",
     },
   ],
   access: {},
@@ -331,19 +331,19 @@ export default defineConfig({
     // 如果不想要 configProvide 动态设置主题需要把这个设置为 default
     // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
     // https://ant.design/docs/react/customize-theme-variable-cn
-    'root-entry-name': 'variable',
+    "root-entry-name": "variable",
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild
   esbuild: {},
   title: false,
   ignoreMomentLocale: true,
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+  proxy: proxy[REACT_APP_ENV || "dev"],
   define: {
-    API_REQUEST_URL: "https://real-sandbox-env-382550828.us-east-1.elb.amazonaws.com",
+    API_REQUEST_URL: " https://sandbox.api.nxglabs.io",
   },
   manifest: {
-    basePath: '/',
+    basePath: "/",
   },
   // Fast Refresh 热更新
   fastRefresh: {},
@@ -352,17 +352,18 @@ export default defineConfig({
       requestLibPath: "import { request } from 'umi'",
       // 或者使用在线的版本
       // schemaPath: "https://gw.alipayobjects.com/os/antfincdn/M%24jrzTTYJN/oneapi.json"
-      schemaPath: join(__dirname, 'oneapi.json'),
+      schemaPath: join(__dirname, "oneapi.json"),
       mock: false,
     },
     {
       requestLibPath: "import { request } from 'umi'",
-      schemaPath: 'http://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json',
-      projectName: 'swagger',
+      schemaPath:
+        "http://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json",
+      projectName: "swagger",
     },
   ],
   nodeModulesTransform: {
-    type: 'none',
+    type: "none",
   },
   mfsu: {},
   webpack5: {},
