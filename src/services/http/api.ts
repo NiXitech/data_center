@@ -220,6 +220,7 @@ export async function editExchange(params: object) {
 
 /** 编辑交易所数据数据 */
 export async function delExchange(params: object) {
+  debugger
   return new Promise((resolve, reject) => {
     http({ method: "delete", url: "/wallet/v1/exchange/backend", params }).then(
       (res) => {
@@ -234,3 +235,34 @@ export async function delExchange(params: object) {
   });
 }
 
+/** 提现数据列表 */
+export async function getWithdrawList() {
+  return new Promise((resolve, reject) => {
+    http({ method: "get", url: "/wallet/v1/pending-withdraw" }).then(
+      (res) => {
+        resolve(res);
+        return res;
+      },
+      (error) => {
+        console.log("网络异常~", error);
+        reject(error);
+      }
+    );
+  });
+}
+
+/** 提现数据列表 */
+export async function getCountNum() {
+  return new Promise((resolve, reject) => {
+    http({ method: "get", url: "/data-center/v1/home" }).then(
+      (res) => {
+        resolve(res);
+        return res;
+      },
+      (error) => {
+        console.log("网络异常~", error);
+        reject(error);
+      }
+    );
+  });
+}

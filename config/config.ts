@@ -95,6 +95,12 @@ export default defineConfig({
           path: "/dashboard/exchange",
           component: "./dashboard/exchange",
         },
+        {
+          name: "crushe提现审核",
+          icon: "smile",
+          path: "/dashboard/withdraw",
+          component: "./dashboard/withdraw",
+        },
         // {
         //   name: "工作台",
         //   icon: "smile",

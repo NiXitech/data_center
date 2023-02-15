@@ -1,26 +1,11 @@
-import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-table'
-import { ProTable, TableDropdown } from '@ant-design/pro-table';
-import { Button, Popconfirm } from 'antd';
-// import { request } from 'express';
+import { ProTable } from '@ant-design/pro-table';
 import { useEffect, useRef, useState } from 'react';
-// import { useRequest } from 'umi';
-// import { fakeChartData2 } from '../../service';
-import { getExchange } from '@/services/http/api';
+import { getWithdrawList } from '@/services/http/api';
 import { editExchange } from '@/services/http/api';
-import { delExchange } from '@/services/http/api';
 
 const Exchange = () => {
     const actionRef = useRef<ActionType>();
-
-    const delData = async (id: any) => {
-        try {
-            const { code, data } = await delExchange({ data: { id: id } }) as any
-            console.log('codeDEL:', code, 'dataDEL:', data)
-        } catch (error) {
-
-        }
-    }
 
     type GithubIssueItem = {
         id: number;
@@ -76,7 +61,7 @@ const Exchange = () => {
         },
         {
             disable: true,
-            title: '广告跟踪链接',
+            title: '链接',
             dataIndex: 'ex_link',
             copyable: true,
             hideInSearch: true,
@@ -92,7 +77,7 @@ const Exchange = () => {
         },
         {
             disable: true,
-            title: '交易所名称',
+            title: '链接名称',
             dataIndex: 'ex_name',
             editable: false,
             formItemProps: {
@@ -105,7 +90,7 @@ const Exchange = () => {
             },
         },
         {
-            title: '平台',
+            title: '操作系统',
             key: 'platform',
             dataIndex: 'platform',
             editable: false,
@@ -127,7 +112,7 @@ const Exchange = () => {
             },
         },
         {
-            title: '推荐交易所',
+            title: 'recommend',
             dataIndex: 'recommend',
             editable: false,
             hideInSearch: true,
@@ -139,9 +124,6 @@ const Exchange = () => {
                     },
                 ],
             },
-            render: (record) => {
-                return record === 0 ? '不推荐' : '推荐'
-            }
         },
         {
             title: '数据来源',
@@ -164,9 +146,7 @@ const Exchange = () => {
         },
         {
             title: '状态',
-            key: 'status',
             dataIndex: 'status',
-            valueType: 'select',
             formItemProps: {
                 rules: [
                     {
@@ -175,16 +155,6 @@ const Exchange = () => {
                     },
                 ],
             },
-            filters: true,
-            onFilter: true,
-            valueEnum: {
-                [0]: { text: '不启用', status: 0 },
-                [1]: { text: '启用', status: 1 },
-                [-1]: { text: '暂停', status: -1 },
-            },
-            // render: (record)=> {
-            //     return record === 0 ? '不启用' : record === 1 ? '启用' : '暂停'
-            // }
         },
         {
             title: '操作',
@@ -194,15 +164,11 @@ const Exchange = () => {
                 <a
                     key="editable"
                     onClick={() => {
-                        console.log('record->:', record)
                         action?.startEditable?.(record.id);
                     }}
                 >
                     编辑
                 </a>,
-                // <Popconfirm title="Sure to delete?" onConfirm={() => delExchange(record.key)}>
-                //     <a>Delete</a>
-                // </Popconfirm>
                 <a
                     key="delete"
                     onClick={() => {
@@ -229,7 +195,7 @@ const Exchange = () => {
 
     const getData = async () => {
         try {
-            const { data } = await getExchange() as any
+            const { data } = await getWithdrawList() as any
             setList(data?.exchanges)
         } catch (error) {
 
@@ -238,13 +204,11 @@ const Exchange = () => {
 
     const editData = async (rowKey: any, record: any, row: any) => {
         try {
-            record.status = Number(record.status)
+            console.log('0------0------>', rowKey);
+            console.log('1------1------>', record);
+            console.log('2------2------>', row);
             const { code, data } = await editExchange(record) as any
-            if (code === 200) {
-                getData()
-            } else {
-
-            }
+            console.log('code:', code, 'data:', data)
         } catch (error) {
 
         }

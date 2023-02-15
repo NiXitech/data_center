@@ -5,13 +5,17 @@ import ProCard from '@ant-design/pro-card';
 import './index.less';
 import { Liquid } from "@ant-design/charts";
 import moment from "moment";
+import { getCountNum } from '@/services/http/api';
 
+
+// curl 'https://sandbox.api.nxglabs.io/data-center/v1/health'
 const IntroduceRow = () => {
 
   const [full, setFull] = useState(false);
   // 创建一个fullScreen的handle
   const handle = useFullScreenHandle();
   const [countNumber, setcountNumber] = useState(2000)
+  const [dau, setDau] = useState(0)
   const [rightnow, setRightnow] = useState('')
 
   const getDate = () => {
@@ -20,13 +24,19 @@ const IntroduceRow = () => {
     setRightnow(now)
   }
 
-  const getNumber = (value: number) => {
-    console.log(value)
-  }
+  const getAllNum = async () => {
+    try {
+        const { data } = await getCountNum() as any
+        setcountNumber(Number(data?.total_user_count))
+        setDau(Number(data?.today_dau))
+    } catch (error) {
+
+    }
+}
 
   useEffect(() => {
-    setInterval(getDate, 1000)
-    setInterval(() => getNumber(20), 2000)
+    setInterval(getDate, 5000)
+    setInterval(() => getAllNum(), 5000)
   }, []);
 
   return (
@@ -56,7 +66,7 @@ const IntroduceRow = () => {
                 <Liquid
                   height={461}
                   min={0}
-                  max={countNumber * 5}
+                  max={countNumber * 3}
                   value={countNumber}
                   forceFit
                   padding={[0, 0, 0, 0]}
@@ -66,9 +76,6 @@ const IntroduceRow = () => {
                   }}
                 />
               </span>
-            </div>
-            <div className='title_date'>
-
             </div>
           </ProCard>
 
@@ -82,8 +89,8 @@ const IntroduceRow = () => {
               <Liquid
                 height={461}
                 min={0}
-                max={countNumber * 5}
-                value={countNumber}
+                max={dau * 5}
+                value={dau}
                 forceFit
                 padding={[0, 0, 0, 0]}
                 statistic={{

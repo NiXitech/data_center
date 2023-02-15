@@ -32,6 +32,9 @@ axios.interceptors.request.use(
         // Authorization: `Bearer ${cookies ? (cookies ? cookies : "") : ""}`,
       };
     }
+    // else if(config.url && config.url.indexOf('/data-center/v1') > -1) {
+    //   // https://sandbox.api.nxglabs.io/data-center/v1/health'
+    // }
 
     return config;
   },
@@ -191,7 +194,7 @@ export function put(
 }
 
 /**
- * 封装put请求
+ * 封装delete请求
  * @param url
  * @param data
  * @returns {Promise}
@@ -203,8 +206,8 @@ export function Axiosdelete(url: string, config: AxiosRequestConfig = {}) {
         if (response.data.code === 200) {
           resolve(response.data);
         } else {
-          message.error(response.data.error.msg);
-          reject(response.data.error.msg);
+          message.error(response.data.err_msg);
+          reject(response.data.err_msg);
         }
       },
       (err) => {
