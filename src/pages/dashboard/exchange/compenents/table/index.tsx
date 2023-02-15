@@ -7,9 +7,20 @@ import { useEffect, useRef, useState } from 'react';
 // import { useRequest } from 'umi';
 // import { fakeChartData2 } from '../../service';
 import { getExchange } from '@/services/http/api';
+import { editExchange } from '@/services/http/api';
+import { delExchange } from '@/services/http/api';
 
 const Exchange = () => {
     const actionRef = useRef<ActionType>();
+
+    const delData = async (id: any) => {
+        try {
+            const { code, data } = await delExchange(id) as any
+            console.log('codeDEL:', code, 'dataDEL:', data)
+        } catch (error) {
+
+        }
+    }
 
     type GithubIssueItem = {
         id: number;
@@ -83,6 +94,7 @@ const Exchange = () => {
             disable: true,
             title: '链接名称',
             dataIndex: 'ex_name',
+            editable: false,
             formItemProps: {
                 rules: [
                     {
@@ -96,6 +108,7 @@ const Exchange = () => {
             title: '操作系统',
             key: 'platform',
             dataIndex: 'platform',
+            editable: false,
             hideInSearch: true,
             filters: true,
             onFilter: true,
@@ -116,6 +129,7 @@ const Exchange = () => {
         {
             title: 'recommend',
             dataIndex: 'recommend',
+            editable: false,
             hideInSearch: true,
             formItemProps: {
                 rules: [
@@ -129,6 +143,7 @@ const Exchange = () => {
         {
             title: '数据来源',
             dataIndex: 'source',
+            editable: false,
             formItemProps: {
                 rules: [
                     {
@@ -172,7 +187,7 @@ const Exchange = () => {
                 <a
                     key="delete"
                     onClick={() => {
-                        action?.startEditable?.(record.id);
+                        delData(record.id);
                     }}
                 >
                     删除
@@ -184,7 +199,7 @@ const Exchange = () => {
                 //   { key: 'copy', name: '复制' },
                 //   { key: 'delete', name: '删除' },
                 // ]}
-            //   />,
+                //   />,
             ],
         },
     ];
@@ -201,24 +216,39 @@ const Exchange = () => {
 
         }
     }
+
+    const editData = async (rowKey: any, record: any, row: any) => {
+        try {
+            console.log('0------0------>', rowKey);
+            console.log('1------1------>', record);
+            console.log('2------2------>', row);
+            const { code, data } = await editExchange(record) as any
+            console.log('code:', code, 'data:', data)
+        } catch (error) {
+
+        }
+    }
+
     useEffect(
         () => {
             getData()
-        })
+        }, [])
 
     return (
         <ProTable<GithubIssueItem>
             columns={columns}
             actionRef={actionRef}
-            dataSource={list}         
+            dataSource={list}
             editable={{
                 type: 'multiple',
+                onSave: (rowKey, record, row) => { editData(rowKey, record, row) }
+                // onChange: setEditableRowKeys,
             }}
             columnsState={{
                 persistenceKey: 'pro-table-singe-demos',
                 persistenceType: 'localStorage',
                 onChange(value) {
-                    console.log('value: ', value);
+                    // console.log('value: ', value);
                 },
             }}
             rowKey="id"
@@ -227,7 +257,7 @@ const Exchange = () => {
                 setting: {
                     listsHeight: 400,
                 },
-                
+                reload: () => { getData() }
             }}
             pagination={{
                 pageSize: 100,

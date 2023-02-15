@@ -201,3 +201,36 @@ export async function getExchange() {
     );
   });
 }
+
+/** 编辑交易所数据数据 */
+export async function editExchange(params: object) {
+  return new Promise((resolve, reject) => {
+    http({ method: "post", url: "/wallet/v1/exchange/backend", params }).then(
+      (res) => {
+        resolve(res);
+        return res;
+      },
+      (error) => {
+        console.log("网络异常~", error);
+        reject(error);
+      }
+    );
+  });
+}
+
+/** 编辑交易所数据数据 */
+export async function delExchange(params: object) {
+  return new Promise((resolve, reject) => {
+    http({ method: "delete", url: "/wallet/v1/exchange/backend", params }).then(
+      (res) => {
+        resolve(res);
+        return res;
+      },
+      (error) => {
+        console.log("网络异常~", error);
+        reject(error);
+      }
+    );
+  });
+}
+
