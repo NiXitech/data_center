@@ -26,13 +26,13 @@ const IntroduceRow = () => {
 
   const getAllNum = async () => {
     try {
-        const { data } = await getCountNum() as any
-        setcountNumber(Number(data?.total_user_count))
-        setDau(Number(data?.today_dau))
+      const { data } = await getCountNum() as any
+      setcountNumber(Number(data?.total_user_count))
+      setDau(Number(data?.today_dau))
     } catch (error) {
 
     }
-}
+  }
 
   useEffect(() => {
     // setInterval(getDate, 1000)
@@ -56,7 +56,8 @@ const IntroduceRow = () => {
             }}
           />}
         <ProCard gutter={16} ghost>
-          <ProCard colSpan={12} style={{ height: '100vh', backgroundColor: '#2F2963', borderRadius: '24px' }}>
+          <ProCard className="cardItem" colSpan={12} style={{ backgroundColor: '#2F2963', borderRadius: '24px' }} layout="center"
+            direction="column">
             <div className='title_count'>
               <span>
                 总用户量
@@ -80,7 +81,8 @@ const IntroduceRow = () => {
             </div>
           </ProCard>
 
-          <ProCard colSpan={12} style={{ height: '100vh', backgroundColor: '#2F2963', borderRadius: '24px' }}>
+          <ProCard className="cardItem" colSpan={12} style={{ backgroundColor: '#2F2963', borderRadius: '24px' }} layout="center"
+            direction="column">
             <div className='title_count'>
               <span>
                 今日<span style={{ fontWeight: '400' }}>DAU</span>
@@ -100,11 +102,11 @@ const IntroduceRow = () => {
                 }}
               />
             </div>
-            <div className='title_date'>
-              {/* <span>
+            {/* <div className='title_date'>
+              <span>
                 更新时间： {rightnow}
-              </span> */}
-            </div>
+              </span>
+            </div> */}
           </ProCard>
         </ProCard>
       </div>
