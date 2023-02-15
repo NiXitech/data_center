@@ -1,94 +1,110 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { TinyArea, TinyColumn } from '@ant-design/charts';
-import { Col, Row, Tooltip } from 'antd';
-
-import numeral from 'numeral';
-import { ChartCard, Field } from './Charts';
-import type { DataItem } from '../data.d';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { FullscreenOutlined } from "@ant-design/icons";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import ProCard from '@ant-design/pro-card';
+import './index.less';
+import { Liquid } from "@ant-design/charts";
+import moment from "moment";
 
-const topColResponsiveProps = {
-  xs: 16,
-  sm: 16,
-  md: 16,
-  lg: 16,
-  xl: 16,
-  style: { marginBottom: 24 }
-};
-
-
-const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: DataItem[] }) => {
+const IntroduceRow = () => {
 
   const [full, setFull] = useState(false);
   // 创建一个fullScreen的handle
   const handle = useFullScreenHandle();
+  const [countNumber, setcountNumber] = useState(2000)
+  const [rightnow, setRightnow] = useState('')
+
+  const getDate = () => {
+    const date = new Date()
+    const now = moment(date).format('YYYY-MM-DD h:mm:ss')
+    setRightnow(now)
+  }
+
+  const getNumber = (value: number) => {
+    console.log(value)
+  }
+
+  useEffect(() => {
+    setInterval(getDate, 1000)
+    setInterval(() => getNumber(20), 2000)
+  }, []);
 
   return (
-    <div style={{ minHeight: '100vh' }}>
-      <FullScreen
-        handle={handle}
-        onChange={setFull}
-      >
+    <FullScreen
+      handle={handle}
+      onChange={setFull}
+    >
+      <div className="overview_content">
         {!full &&
           <FullscreenOutlined
-            style={{ fontSize: 16 }}
+            style={{ fontSize: 18, color: '#3473E7', margin: '10px' }}
             onClick={() => {
               // 点击设置full为true，接着调用handle的enter方法，进入全屏模式
               setFull(true);
               handle.enter();
             }}
           />}
-        <Row gutter={24} justify="center" align="middle">
-          <Col {...topColResponsiveProps}>
-            <ChartCard
-              bordered={false}
-              loading={loading}
-              title="访问量"
-              action={
-                <Tooltip title="指标说明">
-                  <InfoCircleOutlined />
-                </Tooltip>
-              }
-              total={numeral(8899).format('0,0')}
-              footer={<Field label="日访问量" value={numeral(1234).format('0,0')} />}
-              contentHeight={46}
-            >
-              <TinyArea
-                color="#975FE4"
-                xField="x"
-                height={46}
-                forceFit
-                yField="y"
-                smooth
-                data={visitData}
-              />
-            </ChartCard>
-          </Col>
-        </Row>
+        <ProCard gutter={16} ghost>
+          <ProCard colSpan={12} style={{ height: '100vh', backgroundColor: '#2F2963', borderRadius: '24px' }}>
+            <div className='title_count'>
+              <span>
+                累计访问量
+              </span>
+            </div>
+            <div className='title_count'>
+              <span>
+                <Liquid
+                  height={161}
+                  min={0}
+                  max={countNumber * 5}
+                  value={countNumber}
+                  forceFit
+                  padding={[0, 0, 0, 0]}
+                  statistic={{
+                    // formatter: (value) => `${((100 * value) / 10000).toFixed(1)}%`,
+                    formatter: (value) => `${value}`
+                  }}
+                />
+              </span>
+            </div>
+            <div className='title_date'>
+              <span>
+                更新时间： {rightnow}
+              </span>
+            </div>
+          </ProCard>
 
-        <Row gutter={24} justify="center" align="middle">
-          <Col {...topColResponsiveProps}>
-            <ChartCard
-              bordered={false}
-              loading={loading}
-              title="支付笔数"
-              action={
-                <Tooltip title="指标说明">
-                  <InfoCircleOutlined />
-                </Tooltip>
-              }
-              total={numeral(6688).format('0,0')}
-              footer={<Field label="转化率" value="60%" />}
-              contentHeight={46}
-            >
-              <TinyColumn xField="x" height={46} forceFit yField="y" data={visitData} />
-            </ChartCard>
-          </Col>
-        </Row>
-      </FullScreen>
-    </div>
+          <ProCard colSpan={12} style={{ height: '100vh', backgroundColor: '#2F2963', borderRadius: '24px' }}>
+            <div className='title_count'>
+              <span>
+                DAU
+              </span>
+            </div>
+            <div className='title_count'>
+              <span>
+                <Liquid
+                  height={161}
+                  min={0}
+                  max={countNumber * 5}
+                  value={countNumber}
+                  forceFit
+                  padding={[0, 0, 0, 0]}
+                  statistic={{
+                    // formatter: (value) => `${((100 * value) / 10000).toFixed(1)}%`,
+                    formatter: (value) => `${value}`
+                  }}
+                />
+              </span>
+            </div>
+            <div className='title_date'>
+              <span>
+                更新时间： {rightnow}
+              </span>
+            </div>
+          </ProCard>
+        </ProCard>
+      </div>
+    </FullScreen>
   )
 };
 

@@ -64,7 +64,7 @@ export default defineConfig({
     },
     {
       path: "/dashboard",
-      name: "dashboard",
+      name: "仪表盘",
       icon: "dashboard",
       routes: [
         {
@@ -72,31 +72,31 @@ export default defineConfig({
           redirect: "/dashboard/analysis",
         },
         {
-          name: "analysis",
+          name: "分析页",
           icon: "smile",
           path: "/dashboard/analysis",
           component: "./dashboard/analysis",
         },
         {
-          name: "monitor",
+          name: "监控页",
           icon: "smile",
           path: "/dashboard/monitor",
           component: "./dashboard/monitor",
         },
         {
-          name: "overview",
+          name: "概览页",
           icon: "smile",
           path: "/dashboard/overview",
           component: "./dashboard/overview",
         },
         {
-          name: "exchange",
+          name: "交易所",
           icon: "smile",
           path: "/dashboard/exchange",
           component: "./dashboard/exchange",
         },
         {
-          name: "workplace",
+          name: "工作台",
           icon: "smile",
           path: "/dashboard/workplace",
           component: "./dashboard/workplace",
