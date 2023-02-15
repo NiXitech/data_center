@@ -76,7 +76,7 @@ const Exchange = () => {
         },
         {
             disable: true,
-            title: '链接',
+            title: '广告跟踪链接',
             dataIndex: 'ex_link',
             copyable: true,
             hideInSearch: true,
@@ -92,7 +92,7 @@ const Exchange = () => {
         },
         {
             disable: true,
-            title: '链接名称',
+            title: '交易所名称',
             dataIndex: 'ex_name',
             editable: false,
             formItemProps: {
@@ -105,7 +105,7 @@ const Exchange = () => {
             },
         },
         {
-            title: '操作系统',
+            title: '平台',
             key: 'platform',
             dataIndex: 'platform',
             editable: false,

@@ -54,7 +54,7 @@ const IntroduceRow = () => {
             <div className='title_count'>
               <span>
                 <Liquid
-                  height={161}
+                  height={461}
                   min={0}
                   max={countNumber * 5}
                   value={countNumber}
@@ -68,38 +68,34 @@ const IntroduceRow = () => {
               </span>
             </div>
             <div className='title_date'>
-              <span>
-                更新时间： {rightnow}
-              </span>
+
             </div>
           </ProCard>
 
           <ProCard colSpan={12} style={{ height: '100vh', backgroundColor: '#2F2963', borderRadius: '24px' }}>
             <div className='title_count'>
               <span>
-                今日DAU
+                今日<span style={{ fontWeight: '400' }}>DAU</span>
               </span>
             </div>
             <div className='title_count'>
-              <span>
-                <Liquid
-                  height={161}
-                  min={0}
-                  max={countNumber * 5}
-                  value={countNumber}
-                  forceFit
-                  padding={[0, 0, 0, 0]}
-                  statistic={{
-                    // formatter: (value) => `${((100 * value) / 10000).toFixed(1)}%`,
-                    formatter: (value) => `${value}`
-                  }}
-                />
-              </span>
+              <Liquid
+                height={461}
+                min={0}
+                max={countNumber * 5}
+                value={countNumber}
+                forceFit
+                padding={[0, 0, 0, 0]}
+                statistic={{
+                  // formatter: (value) => `${((100 * value) / 10000).toFixed(1)}%`,
+                  formatter: (value) => `${value}`
+                }}
+              />
             </div>
             <div className='title_date'>
-              <span>
+              {/* <span>
                 更新时间： {rightnow}
-              </span>
+              </span> */}
             </div>
           </ProCard>
         </ProCard>

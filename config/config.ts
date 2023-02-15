@@ -71,18 +71,18 @@ export default defineConfig({
           path: "/dashboard",
           redirect: "/dashboard/analysis",
         },
-        {
-          name: "分析页",
-          icon: "smile",
-          path: "/dashboard/analysis",
-          component: "./dashboard/analysis",
-        },
-        {
-          name: "监控页",
-          icon: "smile",
-          path: "/dashboard/monitor",
-          component: "./dashboard/monitor",
-        },
+        // {
+        //   name: "分析页",
+        //   icon: "smile",
+        //   path: "/dashboard/analysis",
+        //   component: "./dashboard/analysis",
+        // },
+        // {
+        //   name: "监控页",
+        //   icon: "smile",
+        //   path: "/dashboard/monitor",
+        //   component: "./dashboard/monitor",
+        // },
         {
           name: "概览页",
           icon: "smile",
@@ -95,12 +95,12 @@ export default defineConfig({
           path: "/dashboard/exchange",
           component: "./dashboard/exchange",
         },
-        {
-          name: "工作台",
-          icon: "smile",
-          path: "/dashboard/workplace",
-          component: "./dashboard/workplace",
-        },
+        // {
+        //   name: "工作台",
+        //   icon: "smile",
+        //   path: "/dashboard/workplace",
+        //   component: "./dashboard/workplace",
+        // },
       ],
     },
     // {
