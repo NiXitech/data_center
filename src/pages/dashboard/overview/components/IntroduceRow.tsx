@@ -35,8 +35,9 @@ const IntroduceRow = () => {
 }
 
   useEffect(() => {
-    setInterval(getDate, 5000)
-    setInterval(() => getAllNum(), 5000)
+    // setInterval(getDate, 1000)
+    setInterval(getAllNum, 1000)
+    // setInterval(()=> {console.log('这里')}, 1000)
   }, []);
 
   return (
