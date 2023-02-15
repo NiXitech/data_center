@@ -48,7 +48,7 @@ const IntroduceRow = () => {
           <ProCard colSpan={12} style={{ height: '100vh', backgroundColor: '#2F2963', borderRadius: '24px' }}>
             <div className='title_count'>
               <span>
-                累计访问量
+                总用户量
               </span>
             </div>
             <div className='title_count'>
@@ -77,7 +77,7 @@ const IntroduceRow = () => {
           <ProCard colSpan={12} style={{ height: '100vh', backgroundColor: '#2F2963', borderRadius: '24px' }}>
             <div className='title_count'>
               <span>
-                DAU
+                今日DAU
               </span>
             </div>
             <div className='title_count'>

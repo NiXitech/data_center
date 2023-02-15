@@ -127,7 +127,7 @@ const Exchange = () => {
             },
         },
         {
-            title: 'recommend',
+            title: '推荐交易所',
             dataIndex: 'recommend',
             editable: false,
             hideInSearch: true,
@@ -139,6 +139,9 @@ const Exchange = () => {
                     },
                 ],
             },
+            render: (record)=> {
+                return record === 0 ? '不推荐' : '推荐'
+            }
         },
         {
             title: '数据来源',
@@ -161,7 +164,9 @@ const Exchange = () => {
         },
         {
             title: '状态',
+            key: 'status',
             dataIndex: 'status',
+            valueType: 'select',
             formItemProps: {
                 rules: [
                     {
@@ -170,6 +175,16 @@ const Exchange = () => {
                     },
                 ],
             },
+            filters: true,
+            onFilter: true,
+            valueEnum: {
+                [0]: { text: '不启用', status: 0 },
+                [1]: { text: '启用', status: 1 },
+                [-1]: { text: '暂停', status: -1 },
+            },
+            // render: (record)=> {
+            //     return record === 0 ? '不启用' : record === 1 ? '启用' : '暂停'
+            // }
         },
         {
             title: '操作',
@@ -179,6 +194,7 @@ const Exchange = () => {
                 <a
                     key="editable"
                     onClick={() => {
+                        console.log('record->:', record)
                         action?.startEditable?.(record.id);
                     }}
                 >
@@ -219,11 +235,13 @@ const Exchange = () => {
 
     const editData = async (rowKey: any, record: any, row: any) => {
         try {
-            console.log('0------0------>', rowKey);
-            console.log('1------1------>', record);
-            console.log('2------2------>', row);
+            record.status = Number(record.status)
             const { code, data } = await editExchange(record) as any
-            console.log('code:', code, 'data:', data)
+            if(code===200) {
+                getData()
+            }else {
+
+            }
         } catch (error) {
 
         }
