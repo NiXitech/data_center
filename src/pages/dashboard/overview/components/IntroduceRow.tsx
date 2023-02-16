@@ -1,0 +1,203 @@
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { FullscreenOutlined } from "@ant-design/icons";
+import { useEffect, useState } from 'react';
+import ProCard from '@ant-design/pro-card';
+import './index.less';
+import { Liquid } from '@ant-design/plots';
+import moment from "moment";
+import { getCountNum } from '@/services/http/api';
+import CountUp from 'react-countup';
+
+// curl 'https://sandbox.api.nxglabs.io/data-center/v1/health'
+const IntroduceRow = () => {
+
+  const [full, setFull] = useState(false);
+  // 创建一个fullScreen的handle
+  const handle = useFullScreenHandle();
+  const [countNumber, setcountNumber] = useState(0)
+  const [dau, setDau] = useState(0)
+  const [rightnow, setRightnow] = useState('')
+
+  const [loading, setLoading] = useState(false);
+  const onStart = () => { setLoading(true) };
+  const onEnd = () => { setLoading(false) };
+  const containerProps = {
+    'aria-busy': loading
+  };
+
+
+  const getDate = () => {
+    const date = new Date()
+    const now = moment(date).format('YYYY-MM-DD h:mm:ss')
+    setRightnow(now)
+  }
+
+  const getAllNum = async () => {
+    try {
+      const { data } = await getCountNum() as any
+      setcountNumber(Number(data?.total_user_count))
+      setDau(Number(data?.today_dau))
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    // setInterval(getDate, 1000)
+    setInterval(getAllNum, 1000)
+    // setInterval(()=> {console.log('这里')}, 1000)
+  }, []);
+
+  const config: any = {
+    percent: 0.65,
+    // shape: 'diamond',
+    outline: {
+      border: 4,
+      distance: 0,
+    },
+    wave: {
+      length: 128,
+    },
+    pattern: {
+      type: 'line',
+    },
+  };
+
+  return (
+    <FullScreen
+      handle={handle}
+      onChange={setFull}
+    >
+      <div className="overview_content">
+        {!full &&
+          <FullscreenOutlined
+            style={{ fontSize: 18, color: '#3473E7', margin: '10px' }}
+            onClick={() => {
+              // 点击设置full为true，接着调用handle的enter方法，进入全屏模式
+              setFull(true);
+              handle.enter();
+            }}
+          />}
+        <ProCard gutter={16} ghost>
+          <ProCard className="cardItem" colSpan={12} style={{ backgroundColor: '#2F2963', borderRadius: '24px' }} layout="center"
+            direction="column">
+            <div className='title_count'>
+              <span>
+                总用户量
+              </span>
+            </div>
+            <div className='title_count'>
+              <span>
+                <Liquid
+                  className="Liquid_hidePercent"
+                  percent={countNumber / 100000}
+                  wave={{
+                    length: 128
+                  }}
+                  outline={{
+                    border: 4,
+                  }}
+                  pattern={{
+                    type: 'line',
+                  }}
+
+                  style={{
+                    color: '#fff',
+                    fontSize: '120px'
+                  }}
+                  statistic={{
+                    title: {
+                      content: JSON.stringify(countNumber),
+                      // @ts-ignore
+                      customHtml: (container, view, datum) => {
+                        return <CountUp
+                          delay={1}
+                          end={countNumber}
+                          duration={1}
+                          // redraw={true}
+                          // start={0}
+                          // preserveValue={true}
+                          // onStart={onStart}
+                          // onEnd={onEnd}
+                          containerProps={containerProps}
+                        />
+                      },
+
+                      style: {
+                        transform: `translate(-50%, -50%)`
+                      }
+                    },
+                    content: {
+
+                    }
+                  }}
+                />
+              </span>
+            </div>
+          </ProCard>
+
+          <ProCard className="cardItem" colSpan={12} style={{ backgroundColor: '#2F2963', borderRadius: '24px' }} layout="center"
+            direction="column">
+            <div className='title_count'>
+              <span>
+                今日<span style={{ fontWeight: 'bolder', }}>DAU</span>
+              </span>
+            </div>
+            <div className='title_count'>
+
+              <Liquid
+                className="Liquid_hidePercent"
+                percent={dau / 1000}
+                wave={{
+                  length: 128
+                }}
+                outline={{
+                  border: 4,
+                }}
+                pattern={{
+                  type: 'line',
+                }}
+
+                style={{
+                  color: '#fff',
+                  fontSize: '120px'
+                }}
+
+
+                statistic={{
+                  title: {
+                    content: JSON.stringify(dau),
+                    // @ts-ignore
+                    customHtml: (container, view, datum) => {
+                      return <CountUp
+                        delay={1}
+                        end={dau}
+                        duration={1}
+                        // redraw={true}
+                        preserveValue={true}
+                      />
+                    },
+
+                    style: {
+                      transform: `translate(-50%, -50%)`
+                    }
+                  },
+                  content: {
+
+                  }
+                }}
+              />
+            </div>
+            {/* <div className='title_date'>
+              <span>
+                更新时间： {rightnow}
+              </span>
+            </div> */}
+          </ProCard>
+        </ProCard>
+      </div>
+    </FullScreen>
+  )
+};
+
+export default IntroduceRow;

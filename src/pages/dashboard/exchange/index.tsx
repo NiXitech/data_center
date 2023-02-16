@@ -1,0 +1,30 @@
+import type { FC } from 'react';
+import { Suspense } from 'react';
+import { GridContent } from '@ant-design/pro-layout';
+// import { useRequest } from 'umi';
+import Exchange from './compenents/table';
+
+// import { fakeChartData } from './service';
+import type { AnalysisData } from './data.d';
+
+
+type AnalysisProps = {
+  dashboardAndanalysis: AnalysisData;
+  loading: boolean;
+};
+
+const Overview: FC<AnalysisProps> = () => {
+  // const { loading, data } = useRequest(fakeChartData);
+
+  return (
+    <GridContent>
+      <>
+        <Suspense fallback={null}>
+          <Exchange />
+        </Suspense>
+      </>
+    </GridContent>
+  );
+};
+
+export default Overview;
