@@ -251,10 +251,26 @@ export async function getWithdrawList() {
   });
 }
 
-/** 提现数据列表 */
+/** 累计 及 日活 数据 */
 export async function getCountNum() {
   return new Promise((resolve, reject) => {
     http({ method: "get", url: "/data-center/v1/home" }).then(
+      (res) => {
+        resolve(res);
+        return res;
+      },
+      (error) => {
+        console.log("网络异常~", error);
+        reject(error);
+      }
+    );
+  });
+}
+
+/** chatgpt */
+export async function chatgpt(params: object) {
+  return new Promise((resolve, reject) => {
+    http({ method: "post", url: "/v1/completions", params: {prompt: params?.prompt || '', model: 'text-davinci-003', max_tokens: 2000} }).then(
       (res) => {
         resolve(res);
         return res;

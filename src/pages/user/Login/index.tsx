@@ -3,13 +3,14 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, message } from 'antd';
 import React from 'react';
 import { ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
-import { history, useModel } from 'umi';
+import { FormattedMessage, history, useModel } from 'umi';
 // import Footer from '@/components/Footer';
 // import { login } from '@/services/ant-design-pro/api';
 import styles from './index.less';
 // import { OnLoginCookie } from '@/services/cooike/cookie';
 import { login } from '@/services/http/api';
 import { SStorage } from '@/services/cooike/storage';
+import { OnLoginCookie } from '@/services/cooike/cookie';
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => (
@@ -46,32 +47,33 @@ const Login: React.FC = () => {
   };
   // values: API.LoginParams
   const handleSubmit = async (values: any) => {
+    console.log(values)
     try {
       // 登录
-      // const msg: any = await login({
-      //   email: values.email,
-      //   pass_code: values.pass_code
-      // });
+      const msg: any = await login({
+        email: values.email,
+        pass_code: values.pass_code
+      });
       // @ts-ignore
 
-      if (values.username === 'admin', values.password === 'admin') {
+      if (msg.code === 200) {
         message.success('登录成功！');
-
-        // OnLoginCookie({
-        //   token: msg.data.token.access_token,
-        // });
-        SStorage.set('accessToken', 1111)
+        OnLoginCookie({
+          token: msg.data.token.access_token,
+        });
+        SStorage.set('accessToken', msg.data.token.access_token)
         await fetchUserCookie();
-
         if (!history) return;
         const { query } = history.location;
+
         const { redirect } = query as { redirect: string };
         history.push(redirect || '/');
+        return;
+      }else {
+        message.error(msg.message)
       }
-
-      // console.log(msg); // 如果失败去设置用户错误信息
     } catch (error) {
-      console.log('%c🀀 error', 'color: #00bf00; font-size: 20px;', error);
+      message.error('登录失败，请重试！', error);
     }
   };
   return (
@@ -93,21 +95,21 @@ const Login: React.FC = () => {
           {status === 'error' && <LoginMessage content={'错误的用户名和密码(admin/admin)'} />}
           <>
             <ProFormText
-              name="username"
+              name="email"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={'username'}
+              placeholder={'email'}
               rules={[
                 {
                   required: true,
-                  message: 'username是必填项！',
+                  message: 'email是必填项！',
                 },
               ]}
             />
             <ProFormText.Password
-              name="password"
+              name="pass_code"
               fieldProps={{
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />,
@@ -127,16 +129,19 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
+            {/* <ProFormCheckbox noStyle name="autoLogin" id="pages.login.rememberMe" >
               自动登录
+            </ProFormCheckbox> */}
+            <ProFormCheckbox noStyle name="autoLogin">
+              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
             </ProFormCheckbox>
-            <a
+            {/* <a
               style={{
                 float: 'right',
               }}
             >
               忘记密码 ?
-            </a>
+            </a> */}
           </div>
         </LoginForm>
       </div>

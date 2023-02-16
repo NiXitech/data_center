@@ -6,10 +6,10 @@ import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
 import _ from "lodash";
 import { history } from "umi";
-import Qs from "qs";
 
 // import { LoginUserCookie } from "../cooike/cookie";
-import { SStorage } from "../cooike/storage";
+// import { SStorage } from "../cooike/storage";
+import { LoginUserCookie } from "../cooike/cookie";
 
 // 设置默认超时时间
 axios.defaults.timeout = 1000 * 60 * 2;
@@ -20,17 +20,47 @@ axios.defaults.baseURL = API_REQUEST_URL;
  */
 
 axios.interceptors.request.use(
-  (config) => {
-    if (config.url === "/wallet/v1/exchange/backend") {
-      // cookies = LoginUserCookie();
+  (config: any) => {
+    if (config.url !== "/user/v1/login-register") {
+      const cookies = LoginUserCookie().token;
       // cookies = SStorage.get("accessToken");
       // config.data = JSON.stringify(config.data);
-      config.headers = {
-        "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTVkNjA2OWItNTM0MC00YzFmLTg1ZjEtOGVmYjFlNTFhN2RiIiwiZGlkIjoiNzZkZGUyZDM4MWQ0NGFjZGI3MWQ0OTYzYmI5ZGViN2UiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc4NjA0Mzk2LCJpYXQiOjE2NzYwMTIzOTZ9.FqSyYGSnxgAWzAHHSkXFyg9uN95KIUTbi1XoIHSXb3k",
-        // Authorization: `Bearer ${cookies ? (cookies ? cookies : "") : ""}`,
-      };
+      if (true) { //config.url?.indexOf('/wallet') !== -1
+        config.headers = {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTVkNjA2OWItNTM0MC00YzFmLTg1ZjEtOGVmYjFlNTFhN2RiIiwiZGlkIjoiNzZkZGUyZDM4MWQ0NGFjZGI3MWQ0OTYzYmI5ZGViN2UiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc4NjA0Mzk2LCJpYXQiOjE2NzYwMTIzOTZ9.FqSyYGSnxgAWzAHHSkXFyg9uN95KIUTbi1XoIHSXb3k",
+        };
+        if (config.url?.indexOf('with') !== -1) {
+          config.headers = {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2U2ZDVmOTQtNmI1Ni00MGI5LTlkYmUtYzUyMTU1YTFkMTFjIiwiZGlkIjoiaWRiMTdlZDFhOS02MjZlLTQ1ZjEtOWY4MS1iYWE1NmI2MjhkZmUiLCJkdHlwZSI6ImFuZHJvaWMiLCJhcHAiOiJjb20ucmVhbC5pb3MiLCJleHAiOjE2NzkxMDkxMDYsImlhdCI6MTY3NjUxNzEwNn0.8WJXBG1BfZapJgdEiEO0b3eWDlDEpRW2QT2hfgoxYbw",
+          };
+        }
+        // chatgpt
+        if (config.url?.indexOf('/completions') !== -1) {
+          config.headers = {
+            "access-control-allow-origin": "*",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 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",
+          }
+        }
+      } else {
+        console.log('rolazheng95@163.com', cookies)
+        config.headers = {
+          "Content-Type": "application/json",
+          "app": 'xyz.yougal.nbriel',
+          "device-type": 'ios',
+          "device-id": "3013f55522044e37899c13fc57adcb2d",
+          "app-version": '1.0.0',
+          "postman": 1,
+          "x-req-encrypt": '0',
+          // Authorization:
+          //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTVkNjA2OWItNTM0MC00YzFmLTg1ZjEtOGVmYjFlNTFhN2RiIiwiZGlkIjoiNzZkZGUyZDM4MWQ0NGFjZGI3MWQ0OTYzYmI5ZGViN2UiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc4NjA0Mzk2LCJpYXQiOjE2NzYwMTIzOTZ9.FqSyYGSnxgAWzAHHSkXFyg9uN95KIUTbi1XoIHSXb3k",
+          Authorization: `Bearer ${cookies || ""}`,
+        };
+      }
     }
     // else if(config.url && config.url.indexOf('/data-center/v1') > -1) {
     //   // https://sandbox.api.nxglabs.io/data-center/v1/health'
@@ -113,25 +143,37 @@ export function post(url: string, data: any, config: AxiosRequestConfig = {}) {
     if (url === "/upload/v1/photo") {
       params = data;
     }
-    axios.post(url, params, config).then(
-      (response) => {
-        //关闭进度条
-        if (response.data.code === 200) {
+    if (url.indexOf('/com') !== -1) {
+      axios.post(url, params.data, config).then(
+        (response) => {
+          //关闭进度条
           resolve(response.data);
-        } else {
-          if (response.data.error) {
-            message.error(response.data.error.msg);
-            reject(response.data.error.msg);
-          } else {
-            message.error(response.data.err_msg);
-            reject(response.data.err_msg);
-          }
+        },
+        (err) => {
+          reject(err);
         }
-      },
-      (err) => {
-        reject(err);
-      }
-    );
+      );
+    } else {
+      axios.post(url, params, config).then(
+        (response) => {
+          //关闭进度条
+          if (response.data.code === 200) {
+            resolve(response.data);
+          } else {
+            if (response.data.error) {
+              message.error(response.data.error.msg);
+              reject(response.data.error.msg);
+            } else {
+              message.error(response.data.err_msg);
+              reject(response.data.err_msg);
+            }
+          }
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    }
   });
 }
 

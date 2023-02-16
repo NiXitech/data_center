@@ -2,6 +2,7 @@ import cookie from 'react-cookies';
 
 // 获取当前用户cookie
 export const LoginUserCookie = () => {
+  console.log('cookie.load()-->', cookie.load('userInfo'))
   return cookie.load('userInfo');
 };
 

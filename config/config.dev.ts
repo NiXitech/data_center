@@ -7,7 +7,7 @@ export default defineConfig({
     "react-dev-inspector/plugins/umi/react-inspector",
   ],
   define: {
-    API_REQUEST_URL: " https://sandbox.api.nxglabs.io",
+    API_REQUEST_URL: "https://sandbox.api.nxglabs.io",
   },
   // https://github.com/zthxxx/react-dev-inspector#inspector-loader-props
   inspectorConfig: {

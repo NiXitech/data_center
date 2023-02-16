@@ -83,3 +83,18 @@ export async function removeRule(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+
+/** 新建规则 POST /api/rule */
+export async function chatgpt(options: any ) {
+  console.log('options-----------options-------------options------>', options)
+  return request<API.RuleListItem>('/v1/completions', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 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",
+    },
+    data: {prompt: options.prompt, model: 'text-davinci-003', max_tokens: 2000},
+    ...(options || {}),
+  });
+}
