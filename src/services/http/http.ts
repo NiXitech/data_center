@@ -143,37 +143,25 @@ export function post(url: string, data: any, config: AxiosRequestConfig = {}) {
     if (url === "/upload/v1/photo") {
       params = data;
     }
-    if (url.indexOf('/com') !== -1) {
-      axios.post(url, params.data, config).then(
-        (response) => {
-          //关闭进度条
+    axios.post(url, params, config).then(
+      (response) => {
+        //关闭进度条
+        if (response.data.code === 200) {
           resolve(response.data);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    } else {
-      axios.post(url, params, config).then(
-        (response) => {
-          //关闭进度条
-          if (response.data.code === 200) {
-            resolve(response.data);
+        } else {
+          if (response.data.error) {
+            message.error(response.data.error.msg);
+            reject(response.data.error.msg);
           } else {
-            if (response.data.error) {
-              message.error(response.data.error.msg);
-              reject(response.data.error.msg);
-            } else {
-              message.error(response.data.err_msg);
-              reject(response.data.err_msg);
-            }
+            message.error(response.data.err_msg);
+            reject(response.data.err_msg);
           }
-        },
-        (err) => {
-          reject(err);
         }
-      );
-    }
+      },
+      (err) => {
+        reject(err);
+      }
+    );
   });
 }
 
