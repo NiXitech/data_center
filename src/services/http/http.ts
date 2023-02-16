@@ -22,7 +22,7 @@ axios.defaults.baseURL = API_REQUEST_URL;
 axios.interceptors.request.use(
   (config: any) => {
     if (config.url !== "/user/v1/login-register") {
-      const cookies = LoginUserCookie().token;
+      // const cookies = LoginUserCookie().token;
       // cookies = SStorage.get("accessToken");
       // config.data = JSON.stringify(config.data);
       if (config.url?.indexOf("/wallet") !== -1) {
@@ -49,7 +49,7 @@ axios.interceptors.request.use(
           };
         }
       } else {
-        console.log("rolazheng95@163.com", cookies);
+        // console.log("rolazheng95@163.com", cookies);
         config.headers = {
           "Content-Type": "application/json",
           app: "xyz.yougal.nbriel",
