@@ -18,13 +18,6 @@ const IntroduceRow = () => {
   const [dau, setDau] = useState(0)
   const [rightnow, setRightnow] = useState('')
 
-  const [loading, setLoading] = useState(false);
-  const onStart = () => { setLoading(true) };
-  const onEnd = () => { setLoading(false) };
-  const containerProps = {
-    'aria-busy': loading
-  };
-
 
   const getDate = () => {
     const date = new Date()
@@ -43,25 +36,10 @@ const IntroduceRow = () => {
   }
 
   useEffect(() => {
-    // setInterval(getDate, 1000)
-    setInterval(getAllNum, 1000)
-    // setInterval(()=> {console.log('这里')}, 1000)
-  }, []);
+    getAllNum()
+    setInterval(getAllNum, 5000)
+  }, [])
 
-  const config: any = {
-    percent: 0.65,
-    // shape: 'diamond',
-    outline: {
-      border: 4,
-      distance: 0,
-    },
-    wave: {
-      length: 128,
-    },
-    pattern: {
-      type: 'line',
-    },
-  };
 
   return (
     <FullScreen
@@ -90,7 +68,7 @@ const IntroduceRow = () => {
               <span>
                 <Liquid
                   className="Liquid_hidePercent"
-                  percent={countNumber / 100000}
+                  percent={countNumber / 1000000}
                   wave={{
                     length: 128
                   }}
@@ -114,12 +92,9 @@ const IntroduceRow = () => {
                           delay={1}
                           end={countNumber}
                           duration={1}
-                          // redraw={true}
-                          // start={0}
-                          // preserveValue={true}
-                          // onStart={onStart}
-                          // onEnd={onEnd}
-                          containerProps={containerProps}
+                          redraw={true}
+                          start={0}
+                          preserveValue={true}
                         />
                       },
 
@@ -147,7 +122,7 @@ const IntroduceRow = () => {
 
               <Liquid
                 className="Liquid_hidePercent"
-                percent={dau / 1000}
+                percent={dau / 100000}
                 wave={{
                   length: 128
                 }}
@@ -173,7 +148,7 @@ const IntroduceRow = () => {
                         delay={1}
                         end={dau}
                         duration={1}
-                        // redraw={true}
+                        redraw={true}
                         preserveValue={true}
                       />
                     },
