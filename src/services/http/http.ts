@@ -22,7 +22,7 @@ axios.defaults.baseURL = API_REQUEST_URL;
 axios.interceptors.request.use(
   (config: any) => {
     if (config.url !== "/user/v1/login-register") {
-      const cookies = LoginUserCookie().token;
+      // const cookies = LoginUserCookie().token;
       // cookies = SStorage.get("accessToken");
       // config.data = JSON.stringify(config.data);
       if (config.url?.indexOf("/wallet") !== -1) {
@@ -49,7 +49,7 @@ axios.interceptors.request.use(
           };
         }
       } else {
-        console.log("rolazheng95@163.com", cookies);
+        // console.log("rolazheng95@163.com", cookies);
         config.headers = {
           "Content-Type": "application/json",
           app: "xyz.yougal.nbriel",
@@ -145,37 +145,25 @@ export function post(url: string, data: any, config: AxiosRequestConfig = {}) {
     if (url === "/upload/v1/photo") {
       params = data;
     }
-    if (url.indexOf("/com") !== -1) {
-      axios.post(url, params.data, config).then(
-        (response) => {
-          //关闭进度条
+    axios.post(url, params, config).then(
+      (response) => {
+        //关闭进度条
+        if (response.data.code === 200) {
           resolve(response.data);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    } else {
-      axios.post(url, params, config).then(
-        (response) => {
-          //关闭进度条
-          if (response.data.code === 200) {
-            resolve(response.data);
+        } else {
+          if (response.data.error) {
+            message.error(response.data.error.msg);
+            reject(response.data.error.msg);
           } else {
-            if (response.data.error) {
-              message.error(response.data.error.msg);
-              reject(response.data.error.msg);
-            } else {
-              message.error(response.data.err_msg);
-              reject(response.data.err_msg);
-            }
+            message.error(response.data.err_msg);
+            reject(response.data.err_msg);
           }
-        },
-        (err) => {
-          reject(err);
         }
-      );
-    }
+      },
+      (err) => {
+        reject(err);
+      }
+    );
   });
 }
 
