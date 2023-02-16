@@ -3,10 +3,10 @@ import { FullscreenOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
 import ProCard from '@ant-design/pro-card';
 import './index.less';
-import { Liquid } from "@ant-design/charts";
+import { Liquid } from '@ant-design/plots';
 import moment from "moment";
 import { getCountNum } from '@/services/http/api';
-
+import CountUp from 'react-countup';
 
 // curl 'https://sandbox.api.nxglabs.io/data-center/v1/health'
 const IntroduceRow = () => {
@@ -14,9 +14,17 @@ const IntroduceRow = () => {
   const [full, setFull] = useState(false);
   // 创建一个fullScreen的handle
   const handle = useFullScreenHandle();
-  const [countNumber, setcountNumber] = useState(2000)
+  const [countNumber, setcountNumber] = useState(0)
   const [dau, setDau] = useState(0)
   const [rightnow, setRightnow] = useState('')
+
+  const [loading, setLoading] = useState(false);
+  const onStart = () => { setLoading(true) };
+  const onEnd = () => { setLoading(false) };
+  const containerProps = {
+    'aria-busy': loading
+  };
+
 
   const getDate = () => {
     const date = new Date()
@@ -39,6 +47,21 @@ const IntroduceRow = () => {
     setInterval(getAllNum, 1000)
     // setInterval(()=> {console.log('这里')}, 1000)
   }, []);
+
+  const config: any = {
+    percent: 0.65,
+    // shape: 'diamond',
+    outline: {
+      border: 4,
+      distance: 0,
+    },
+    wave: {
+      length: 128,
+    },
+    pattern: {
+      type: 'line',
+    },
+  };
 
   return (
     <FullScreen
@@ -66,15 +89,47 @@ const IntroduceRow = () => {
             <div className='title_count'>
               <span>
                 <Liquid
-                  height={461}
-                  min={0}
-                  max={countNumber * 3}
-                  value={countNumber}
-                  forceFit
-                  padding={[0, 0, 0, 0]}
+                  className="Liquid_hidePercent"
+                  percent={countNumber / 100000}
+                  wave={{
+                    length: 128
+                  }}
+                  outline={{
+                    border: 4,
+                  }}
+                  pattern={{
+                    type: 'line',
+                  }}
+
+                  style={{
+                    color: '#fff',
+                    fontSize: '120px'
+                  }}
                   statistic={{
-                    // formatter: (value) => `${((100 * value) / 10000).toFixed(1)}%`,
-                    formatter: (value) => `${value}`
+                    title: {
+                      content: JSON.stringify(countNumber),
+                      // @ts-ignore
+                      customHtml: (container, view, datum) => {
+                        return <CountUp
+                          delay={1}
+                          end={countNumber}
+                          duration={1}
+                          // redraw={true}
+                          // start={0}
+                          // preserveValue={true}
+                          // onStart={onStart}
+                          // onEnd={onEnd}
+                          containerProps={containerProps}
+                        />
+                      },
+
+                      style: {
+                        transform: `translate(-50%, -50%)`
+                      }
+                    },
+                    content: {
+
+                    }
                   }}
                 />
               </span>
@@ -85,20 +140,51 @@ const IntroduceRow = () => {
             direction="column">
             <div className='title_count'>
               <span>
-                今日<span style={{ fontWeight: '400' }}>DAU</span>
+                今日<span style={{ fontWeight: 'bolder', }}>DAU</span>
               </span>
             </div>
             <div className='title_count'>
+
               <Liquid
-                height={461}
-                min={0}
-                max={dau * 5}
-                value={dau}
-                forceFit
-                padding={[0, 0, 0, 0]}
+                className="Liquid_hidePercent"
+                percent={dau / 1000}
+                wave={{
+                  length: 128
+                }}
+                outline={{
+                  border: 4,
+                }}
+                pattern={{
+                  type: 'line',
+                }}
+
+                style={{
+                  color: '#fff',
+                  fontSize: '120px'
+                }}
+
+
                 statistic={{
-                  // formatter: (value) => `${((100 * value) / 10000).toFixed(1)}%`,
-                  formatter: (value) => `${value}`
+                  title: {
+                    content: JSON.stringify(dau),
+                    // @ts-ignore
+                    customHtml: (container, view, datum) => {
+                      return <CountUp
+                        delay={1}
+                        end={dau}
+                        duration={1}
+                        // redraw={true}
+                        preserveValue={true}
+                      />
+                    },
+
+                    style: {
+                      transform: `translate(-50%, -50%)`
+                    }
+                  },
+                  content: {
+
+                  }
                 }}
               />
             </div>
