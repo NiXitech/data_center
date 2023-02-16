@@ -53,12 +53,12 @@ axios.interceptors.request.use(
         config.headers = {
           "Content-Type": "application/json",
           // app: "xyz.yougal.nbriel",
-          "device-type": "ios",
-          "device-id": "3013f55522044e37899c13fc57adcb2d",
+          // "device-type": "ios",
+          // "device-id": "3013f55522044e37899c13fc57adcb2d",
           // "app-version": "1.0.0",
-          postman: 1,
+          // "postman": "1",
           // "x-req-encrypt": "0",
-          Authorization: `Bearer ${Authorization_Token}`,
+          // Authorization: `Bearer ${Authorization_Token}`,
           //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTVkNjA2OWItNTM0MC00YzFmLTg1ZjEtOGVmYjFlNTFhN2RiIiwiZGlkIjoiNzZkZGUyZDM4MWQ0NGFjZGI3MWQ0OTYzYmI5ZGViN2UiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc4NjA0Mzk2LCJpYXQiOjE2NzYwMTIzOTZ9.FqSyYGSnxgAWzAHHSkXFyg9uN95KIUTbi1XoIHSXb3k",
           // Authorization: `Bearer ${cookies || ""}`,
         };
