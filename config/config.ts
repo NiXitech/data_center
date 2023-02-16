@@ -3,7 +3,7 @@ import { defineConfig } from "umi";
 import { join } from "path";
 import defaultSettings from "./defaultSettings";
 import proxy from "./proxy";
-import routes from "./routes"
+import routes from "./routes";
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
@@ -47,7 +47,7 @@ export default defineConfig({
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || "dev"],
   define: {
-    API_REQUEST_URL: " https://sandbox.api.nxglabs.io",
+    API_REQUEST_URL: " https://api.nxglabs.io",
   },
   manifest: {
     basePath: "/",

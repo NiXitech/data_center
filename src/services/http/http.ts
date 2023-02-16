@@ -25,13 +25,14 @@ axios.interceptors.request.use(
       const cookies = LoginUserCookie().token;
       // cookies = SStorage.get("accessToken");
       // config.data = JSON.stringify(config.data);
-      if (true) { //config.url?.indexOf('/wallet') !== -1
+      if (config.url?.indexOf("/wallet") !== -1) {
+        //config.url?.indexOf('/wallet') !== -1
         config.headers = {
           "Content-Type": "application/json",
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTVkNjA2OWItNTM0MC00YzFmLTg1ZjEtOGVmYjFlNTFhN2RiIiwiZGlkIjoiNzZkZGUyZDM4MWQ0NGFjZGI3MWQ0OTYzYmI5ZGViN2UiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc4NjA0Mzk2LCJpYXQiOjE2NzYwMTIzOTZ9.FqSyYGSnxgAWzAHHSkXFyg9uN95KIUTbi1XoIHSXb3k",
         };
-        if (config.url?.indexOf('with') !== -1) {
+        if (config.url?.indexOf("with") !== -1) {
           config.headers = {
             "Content-Type": "application/json",
             Authorization:
@@ -39,26 +40,27 @@ axios.interceptors.request.use(
           };
         }
         // chatgpt
-        if (config.url?.indexOf('/completions') !== -1) {
+        if (config.url?.indexOf("/completions") !== -1) {
           config.headers = {
             "access-control-allow-origin": "*",
             "Content-Type": "application/json",
-            "Authorization": "Bearer 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",
-          }
+            Authorization:
+              "Bearer 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",
+          };
         }
       } else {
-        console.log('rolazheng95@163.com', cookies)
+        console.log("rolazheng95@163.com", cookies);
         config.headers = {
           "Content-Type": "application/json",
-          "app": 'xyz.yougal.nbriel',
-          "device-type": 'ios',
+          app: "xyz.yougal.nbriel",
+          "device-type": "ios",
           "device-id": "3013f55522044e37899c13fc57adcb2d",
-          "app-version": '1.0.0',
-          "postman": 1,
-          "x-req-encrypt": '0',
+          "app-version": "1.0.0",
+          postman: 1,
+          "x-req-encrypt": "0",
           // Authorization:
           //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTVkNjA2OWItNTM0MC00YzFmLTg1ZjEtOGVmYjFlNTFhN2RiIiwiZGlkIjoiNzZkZGUyZDM4MWQ0NGFjZGI3MWQ0OTYzYmI5ZGViN2UiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc4NjA0Mzk2LCJpYXQiOjE2NzYwMTIzOTZ9.FqSyYGSnxgAWzAHHSkXFyg9uN95KIUTbi1XoIHSXb3k",
-          Authorization: `Bearer ${cookies || ""}`,
+          // Authorization: `Bearer ${cookies || ""}`,
         };
       }
     }
