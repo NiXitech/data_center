@@ -26,16 +26,17 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
   console.log('%c🀁 initialState', 'color: #aa00ff; font-size: 20px;', initialState);
-  // const fetchUserInfo = async () => {
-  //   const userInfo = await initialState?.fetchUserInfo?.();
-  //   console.log('%c🀀 userInfo', 'color: #00e600; font-size: 20px;', userInfo);
-  //   if (userInfo) {
-  //     await setInitialState((s) => ({
-  //       ...s,
-  //       currentUser: userInfo,
-  //     }));
-  //   }
-  // };
+  const fetchUserInfo = async () => {
+    // @ts-ignore
+    const userInfo = await initialState?.fetchUserInfo?.();
+    console.log('%c🀀 userInfo', 'color: #00e600; font-size: 20px;', userInfo);
+    if (userInfo) {
+      await setInitialState((s) => ({
+        ...s,
+        currentUser: userInfo,
+      }));
+    }
+  };
   const fetchUserCookie = async () => {
     const token = await initialState?.fetchUserCookie?.();
     if (token) {
@@ -50,18 +51,20 @@ const Login: React.FC = () => {
     console.log(values)
     try {
       // 登录
-      const msg: any = await login({
-        email: values.email,
-        pass_code: values.pass_code
-      });
+      // const msg: any = await login({
+      //   email: values.email,
+      //   pass_code: values.pass_code
+      // });
       // @ts-ignore
 
-      if (msg.code === 200) {
+      // if (msg.code === 200) {
+      if (values.email === 'admin' && values.pass_code === 'admin') {
         message.success('登录成功！');
-        OnLoginCookie({
-          token: msg.data.token.access_token,
-        });
-        SStorage.set('accessToken', msg.data.token.access_token)
+        // OnLoginCookie({
+        //   token: msg.data.token.access_token,
+        // });
+        // SStorage.set('accessToken', msg.data.token.access_token)
+        SStorage.set('accessToken', 11111)
         await fetchUserCookie();
         if (!history) return;
         const { query } = history.location;
@@ -69,10 +72,11 @@ const Login: React.FC = () => {
         const { redirect } = query as { redirect: string };
         history.push(redirect || '/');
         return;
-      }else {
-        message.error(msg.message)
+      } else {
+        message.error('登录失败')
       }
     } catch (error) {
+      // @ts-ignore
       message.error('登录失败，请重试！', error);
     }
   };
