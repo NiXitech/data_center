@@ -1,15 +1,17 @@
 import type { ActionType, ProColumns } from '@ant-design/pro-table'
 import { ProTable } from '@ant-design/pro-table';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { getWithdrawList } from '@/services/http/api';
 import { approveWithdraw } from '@/services/http/api';
 import { Button, Modal } from 'antd';
+import { PageLoading } from '@ant-design/pro-layout';
 
 const Exchange = () => {
     const actionRef = useRef<ActionType>();
     const [showModal, setshowModal] = useState(false)
     const [showModalcontent, setshowModalcontent] = useState('')
     const [successList, setsuccessList] = useState([])
+    const [loading, setloading] = useState(true)
 
     const postapproveWithdraw = async () => {
         try {
@@ -18,10 +20,10 @@ const Exchange = () => {
                 setshowModal(true)
                 setsuccessList(data)
                 setshowModalcontent('操作成功')
-            }else{
+            } else {
                 setshowModalcontent('操作失败')
             }
-            
+
         } catch (error) {
 
         }
@@ -82,8 +84,13 @@ const Exchange = () => {
 
     const getData = async () => {
         try {
-            const { data } = await getWithdrawList() as any
-            setList(data)
+            const { code, data } = await getWithdrawList() as any
+            if (code === 200) {
+                setList(data)
+                setloading(false)
+            } else {
+                setloading(false)
+            }
         } catch (error) {
 
         }
@@ -96,46 +103,48 @@ const Exchange = () => {
 
     return (
         <>
-            <ProTable
-                columns={columns}
-                actionRef={actionRef}
-                dataSource={list}
-                rowKey="id"
-                search={false}
-                options={{
-                    setting: {
-                        listsHeight: 400,
-                    },
-                    reload: () => { getData() }
-                }}
-                pagination={{
-                    pageSize: 100,
-                    onChange: (page) => console.log(page),
-                }}
-                headerTitle="提现申请列表"
-                toolBarRender={() => [
-                    <Button key="button" type="primary" onClick={() => { postapproveWithdraw() }}>
-                        提现
-                    </Button>,
-                ]}
-            />
-            <Modal
-                open={showModal}
-                onOk={() => setshowModal(false)}
-                onCancel={() => setshowModal(false)}
-                title={showModalcontent}
-            >
-                {
-                    successList.map((item, index) => {
-                        return (
-                            <div key={item}>
-                                <p>状态：{item?.transation?.result}</p>
-                                <p>订单号：{item?.orderId }</p>
-                            </div>
-                        )
-                    })
-                }
-            </Modal>
+            <Suspense fallback={<PageLoading />}>
+                <ProTable
+                    columns={columns}
+                    actionRef={actionRef}
+                    dataSource={list}
+                    rowKey="id"
+                    search={false}
+                    options={{
+                        setting: {
+                            listsHeight: 400,
+                        },
+                        reload: () => { getData() }
+                    }}
+                    pagination={{
+                        pageSize: 100,
+                        onChange: (page) => console.log(page),
+                    }}
+                    headerTitle="提现申请列表"
+                    toolBarRender={() => [
+                        <Button key="button" type="primary" onClick={() => { postapproveWithdraw() }}>
+                            提现
+                        </Button>,
+                    ]}
+                />
+                <Modal
+                    open={showModal}
+                    onOk={() => setshowModal(false)}
+                    onCancel={() => setshowModal(false)}
+                    title={showModalcontent}
+                >
+                    {
+                        successList.map((item, index) => {
+                            return (
+                                <div key={item}>
+                                    <p>状态：{item?.transation?.result}</p>
+                                    <p>订单号：{item?.orderId}</p>
+                                </div>
+                            )
+                        })
+                    }
+                </Modal>
+            </Suspense>
         </>
     );
 }
