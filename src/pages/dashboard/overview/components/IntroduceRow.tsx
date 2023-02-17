@@ -87,16 +87,16 @@ const IntroduceRow = () => {
                     title: {
                       content: JSON.stringify(countNumber),
                       // @ts-ignore
-                      customHtml: (container, view, datum) => {
-                        return <CountUp
-                          delay={1}
-                          end={countNumber}
-                          duration={1}
-                          redraw={true}
-                          start={0}
-                          preserveValue={true}
-                        />
-                      },
+                      // customHtml: (container, view, datum) => {
+                      //   return <CountUp
+                      //     delay={1}
+                      //     end={countNumber}
+                      //     duration={1}
+                      //     redraw={true}
+                      //     start={0}
+                      //     preserveValue={true}
+                      //   />
+                      // },
 
                       style: {
                         transform: `translate(-50%, -50%)`
@@ -143,15 +143,15 @@ const IntroduceRow = () => {
                   title: {
                     content: JSON.stringify(dau),
                     // @ts-ignore
-                    customHtml: (container, view, datum) => {
-                      return <CountUp
-                        delay={1}
-                        end={dau}
-                        duration={1}
-                        redraw={true}
-                        preserveValue={true}
-                      />
-                    },
+                    // customHtml: (container, view, datum) => {
+                    //   return <CountUp
+                    //     delay={1}
+                    //     end={dau}
+                    //     duration={1}
+                    //     redraw={true}
+                    //     preserveValue={true}
+                    //   />
+                    // },
 
                     style: {
                       transform: `translate(-50%, -50%)`
