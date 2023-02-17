@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { chatgpt } from '@/services/ant-design-pro/api'
-import { chatgpt } from '@/services/http/api'
+import { chatgpt } from '@/services/socialapi/api'
 
 const ChatGpt = () => {
     const [input, setInput] = useState<string>("");

@@ -37,7 +37,10 @@ const IntroduceRow = () => {
 
   useEffect(() => {
     getAllNum()
-    setInterval(getAllNum, 5000)
+    const timer = setInterval(getAllNum, 5000)
+    return function cleanup() {
+      clearInterval(timer)
+    }
   }, [])
 
 
