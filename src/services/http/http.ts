@@ -36,7 +36,7 @@ axios.interceptors.request.use(
           config.headers = {
             "Content-Type": "application/json",
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2U2ZDVmOTQtNmI1Ni00MGI5LTlkYmUtYzUyMTU1YTFkMTFjIiwiZGlkIjoiaWRiMTdlZDFhOS02MjZlLTQ1ZjEtOWY4MS1iYWE1NmI2MjhkZmUiLCJkdHlwZSI6ImFuZHJvaWMiLCJhcHAiOiJjb20ucmVhbC5pb3MiLCJleHAiOjE2NzkxMDkxMDYsImlhdCI6MTY3NjUxNzEwNn0.8WJXBG1BfZapJgdEiEO0b3eWDlDEpRW2QT2hfgoxYbw",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYjhiODEyMTItNjQ2OC00NGJkLThiNGQtNTAxOTQ3YTQzYWRjIiwiZGlkIjoiMzAxM2Y1NTUyMjA0NGUzNzg5OWMxM2ZjNTdhZGNiMmQiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc5MjEyNzkzLCJpYXQiOjE2NzY2MjA3OTN9.IP3rohO0UdvHJ5XKtQSsI_eRn37W-mgQ1PLl1DwVhzY",
           };
         }
         // chatgpt

@@ -3,15 +3,17 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table'
 import { ProTable, TableDropdown } from '@ant-design/pro-table';
 import { Button, Popconfirm } from 'antd';
 // import { request } from 'express';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 // import { useRequest } from 'umi';
 // import { fakeChartData2 } from '../../service';
 import { getExchange } from '@/services/http/api';
 import { editExchange } from '@/services/http/api';
 import { delExchange } from '@/services/http/api';
+import { PageLoading } from '@ant-design/pro-layout';
 
 const Exchange = () => {
     const actionRef = useRef<ActionType>();
+    const [loading, setloading] = useState(true)
 
     const delData = async (id: any) => {
         try {
@@ -229,8 +231,14 @@ const Exchange = () => {
 
     const getData = async () => {
         try {
-            const { data } = await getExchange() as any
-            setList(data?.exchanges)
+            setloading(true)
+            const { code, data } = await getExchange() as any
+            if (code === 200) {
+                setList(data?.exchanges)
+                setloading(false)
+            }else {
+                setloading(false)
+            }
         } catch (error) {
 
         }
@@ -238,12 +246,13 @@ const Exchange = () => {
 
     const editData = async (rowKey: any, record: any, row: any) => {
         try {
+            setloading(true)
             record.status = Number(record.status)
             const { code, data } = await editExchange(record) as any
             if (code === 200) {
                 getData()
             } else {
-
+                setloading(false)
             }
         } catch (error) {
 
@@ -256,36 +265,39 @@ const Exchange = () => {
         }, [])
 
     return (
-        <ProTable<GithubIssueItem>
-            columns={columns}
-            actionRef={actionRef}
-            dataSource={list}
-            editable={{
-                type: 'multiple',
-                onSave: (rowKey, record, row) => { editData(rowKey, record, row) }
-                // onChange: setEditableRowKeys,
-            }}
-            columnsState={{
-                persistenceKey: 'pro-table-singe-demos',
-                persistenceType: 'localStorage',
-                onChange(value) {
-                    // console.log('value: ', value);
-                },
-            }}
-            rowKey="id"
-            search={false}
-            options={{
-                setting: {
-                    listsHeight: 400,
-                },
-                reload: () => { getData() }
-            }}
-            pagination={{
-                pageSize: 100,
-                onChange: (page) => console.log(page),
-            }}
-            headerTitle="交易所数据"
-        />
+        <Suspense fallback={<PageLoading />}>
+            <ProTable<GithubIssueItem>
+                loading={loading}
+                columns={columns}
+                actionRef={actionRef}
+                dataSource={list}
+                editable={{
+                    type: 'multiple',
+                    onSave: (rowKey, record, row) => { editData(rowKey, record, row) }
+                    // onChange: setEditableRowKeys,
+                }}
+                columnsState={{
+                    persistenceKey: 'pro-table-singe-demos',
+                    persistenceType: 'localStorage',
+                    onChange(value) {
+                        // console.log('value: ', value);
+                    },
+                }}
+                rowKey="id"
+                search={false}
+                options={{
+                    setting: {
+                        listsHeight: 400,
+                    },
+                    reload: () => { getData() }
+                }}
+                pagination={{
+                    pageSize: 100,
+                    onChange: (page) => console.log(page),
+                }}
+                headerTitle="交易所数据"
+            />
+        </Suspense>
     );
 }
 
