@@ -251,6 +251,22 @@ export async function getWithdrawList() {
   });
 }
 
+/** 发起提现 */
+export async function approveWithdraw() {
+  return new Promise((resolve, reject) => {
+    http({ method: "post", url: "/wallet/v1/approve-withdraw" }).then(
+      (res) => {
+        resolve(res);
+        return res;
+      },
+      (error) => {
+        console.log("网络异常~", error);
+        reject(error);
+      }
+    );
+  });
+}
+
 /** 累计 及 日活 数据 */
 export async function getCountNum() {
   return new Promise((resolve, reject) => {
