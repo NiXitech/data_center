@@ -28,6 +28,7 @@ axios.interceptors.request.use(
       if (config.url?.indexOf("/wallet") !== -1) {
         //config.url?.indexOf('/wallet') !== -1
         config.headers = {
+          "postman": 1,
           "Content-Type": "application/json",
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2U2ZDVmOTQtNmI1Ni00MGI5LTlkYmUtYzUyMTU1YTFkMTFjIiwiZGlkIjoiaWRiMTdlZDFhOS02MjZlLTQ1ZjEtOWY4MS1iYWE1NmI2MjhkZmUiLCJkdHlwZSI6ImFuZHJvaWMiLCJhcHAiOiJjb20ucmVhbC5pb3MiLCJleHAiOjE2Nzk0NzUzNTYsImlhdCI6MTY3Njg4MzM1Nn0._1k79FcEocs618H7mxRNf_IQZWzdlo5wV8FlqyycPhc",
