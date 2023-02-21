@@ -36,7 +36,7 @@ const IntroduceRow = () => {
       } else {
         console.log('getCountNum error!');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const IntroduceRow = () => {
           />
         )}
         <Layout
-        className='h_full'
+          className='h_full'
           style={{
             backgroundColor: '#2F2963',
             display: 'flex',
@@ -181,12 +181,20 @@ const IntroduceRow = () => {
               <div className="plots_overview">{/* <PlotsLine /> */}</div>
             </ProCard>
           </ProCard>
-          <ProCard ghost colSpan={24} gutter={[16, 24]} layout="center">
-            <ProCard ghost colSpan={16} style={{padding:'24px'}}>
-              <div className="title_plots">
-                <span>历史DAU</span>
+          <ProCard ghost colSpan={24} layout="center">
+            <ProCard ghost colSpan={20} style={{ padding: '24px' }}>
+              <div className="title_count text-left">
+                <span>历史<span style={{ fontWeight: 'bolder' }}>DAU</span></span>
               </div>
-              <PlotsLine data={dauhistory} />
+              <div
+                style={{
+                  marginTop: '40px'
+                }}
+              >
+                <PlotsLine
+                  data={dauhistory}
+                />
+              </div>
             </ProCard>
           </ProCard>
         </Layout>
