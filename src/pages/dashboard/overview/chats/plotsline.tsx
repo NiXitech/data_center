@@ -7,6 +7,7 @@ const PlotsLine = (props: any) => {
   const { data, Field, setting } = props;
 
   const config = {
+    height: 200,
     data,
     xField: Field.x,
     yField: Field.y,

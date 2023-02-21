@@ -43,12 +43,12 @@ const BaseData = (props: propsType): JSX.Element => {
 
   const cardStyle = {
     color: '#fff',
-    fontSize: '48px',
+    fontSize: '1.2rem',
   };
 
   const cardStyle_percent = {
     color: '#e2ea49',
-    fontSize: '24px',
+    fontSize: '.8rem',
   };
 
   return (
