@@ -9,6 +9,7 @@ import { getCountNum } from '@/services/http/api';
 // import CountUp from 'react-countup';
 import PlotsLine from './plotsline';
 import { Badge, Divider, Layout } from 'antd';
+import BaseData from './base';
 
 // curl 'https://sandbox.api.nxglabs.io/data-center/v1/health'
 const IntroduceRow = () => {
@@ -20,6 +21,18 @@ const IntroduceRow = () => {
   const [dauhistory, setdauhistory] = useState([]);
   const [circle_yestoday_count, setcircle_yestoday_count] = useState('');
   const [circle_yestoday_dau, setcircle_yestoday_dau] = useState('');
+
+  const [dataBase, setDatabase] = useState({
+    daily_dau: [],
+    daily_retention: [],
+    sign_in: [],
+    referral: [],
+    total_user_count: '',
+    yesterday_total_user_count: '',
+    today_incr_count: '',
+    yesterday_incr_count: '',
+    today_dau: ''
+  })
   // const [rightnow, setRightnow] = useState('')
 
   // const getDate = () => {
@@ -92,160 +105,12 @@ const IntroduceRow = () => {
             justifyContent: 'center',
           }}
         >
-          <ProCard gutter={[16]} ghost wrap>
-            <ProCard
-              ghost
-              className="cardItem"
-              colSpan={12}
-              // style={{ backgroundColor: '#2F2963', borderRadius: '24px' }}
-              layout="center"
-              direction="column"
-            >
-              <Badge
-                className="huanbi_yestoday"
-                color={'rgba(0,0,0,0)'}
-                size="default"
-                offset={[50, 0]}
-                count={circle_yestoday_count}
-                overflowCount={999}
-              >
-                <div className="title_count">
-                  <span>总用户量</span>
-                </div>
-              </Badge>
-              <div className="title_count">
-                <span>
-                  <Liquid
-                    className="Liquid_hidePercent"
-                    percent={countNumber / 1000000}
-                    wave={{
-                      length: 128,
-                    }}
-                    outline={{
-                      border: 4,
-                    }}
-                    pattern={{
-                      type: 'line',
-                    }}
-                    style={{
-                      color: '#fff',
-                      fontSize: '120px',
-                    }}
-                    statistic={{
-                      title: {
-                        content: JSON.stringify(countNumber),
-                        // @ts-ignore
-                        // customHtml: (container, view, datum) => {
-                        //   return <CountUp
-                        //     delay={1}
-                        //     end={countNumber}
-                        //     duration={1}
-                        //     redraw={true}
-                        //     start={0}
-                        //     preserveValue={true}
-                        //   />
-                        // },
+          {/* 基本数据 */}
+          <BaseData dataBase={dataBase} />
+          {/* 图标数据 */}
 
-                        style: {
-                          transform: `translate(-50%, -50%)`,
-                        },
-                      },
-                      content: {},
-                    }}
-                  />
-                </span>
-              </div>
-            </ProCard>
 
-            <ProCard
-              ghost
-              className="cardItem"
-              colSpan={12}
-              // style={{ backgroundColor: '#2F2963', borderRadius: '24px' }}
-              layout="center"
-              direction="column"
-            >
-              <Badge
-                color={'rgba(0,0,0,0)'}
-                size="default"
-                offset={[80, 0]}
-                count={circle_yestoday_dau}
-                overflowCount={999999999}
-              >
-                <div className="title_count">
-                  <span>
-                    今日<span style={{ fontWeight: 'bolder' }}>DAU</span>
-                  </span>
-                </div>
-              </Badge>
-              <div className="title_count">
-                <Liquid
-                  className="Liquid_hidePercent"
-                  percent={dau / 100000}
-                  wave={{
-                    length: 128,
-                  }}
-                  outline={{
-                    border: 4,
-                  }}
-                  pattern={{
-                    type: 'line',
-                  }}
-                  style={{
-                    color: '#fff',
-                    fontSize: '120px',
-                  }}
-                  statistic={{
-                    title: {
-                      content: JSON.stringify(dau),
-                      // @ts-ignore
-                      // customHtml: (container, view, datum) => {
-                      //   return <CountUp
-                      //     delay={1}
-                      //     end={dau}
-                      //     duration={1}
-                      //     redraw={true}
-                      //     preserveValue={true}
-                      //   />
-                      // },
-                      // customHtml: (container, view, datum) => {
-                      //   return (
-                      //     <>
 
-                      //     </>
-                      //   )
-                      // },
-
-                      style: {
-                        transform: `translate(-50%, -50%)`,
-                      },
-                    },
-                    content: {
-                      
-                    },
-                  }}
-                />
-              </div>
-              <div className="plots_overview">{/* <PlotsLine /> */}</div>
-            </ProCard>
-          </ProCard>
-
-          <ProCard ghost colSpan={24} layout="center">
-            <ProCard ghost colSpan={20} style={{ padding: '24px' }}>
-              <div className="title_count text-left">
-                <span>历史<span style={{ fontWeight: 'bolder' }}>DAU</span></span>
-              </div>
-              <div
-                style={{
-                  marginTop: '40px'
-                }}
-              >
-                <PlotsLine
-                  data={dauhistory}
-                />
-              </div>
-            </ProCard>
-          </ProCard>
         </Layout>
       </div>
     </FullScreen>
