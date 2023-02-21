@@ -1,11 +1,15 @@
-import ProCard from "@ant-design/pro-card";
+import { Col, Row } from "antd";
 import PlotsLine from "./plotsline";
 
-const TableView = (): JSX.Element => {
+interface propsType {
+  dataBase: any
+}
+
+const TableView = (props: propsType): JSX.Element => {
   return (
     <>
-      {/* <ProCard ghost colSpan={24} layout="center">
-        <ProCard ghost colSpan={20} style={{ padding: '24px' }}>
+      <Row gutter={24}>
+        <Col span={12}>
           <div className="title_count text-left">
             <span>历史<span style={{ fontWeight: 'bolder' }}>DAU</span></span>
           </div>
@@ -15,11 +19,30 @@ const TableView = (): JSX.Element => {
             }}
           >
             <PlotsLine
-              data={dauhistory}
+              data={props.dataBase.daily_dau}
             />
           </div>
-        </ProCard>
-      </ProCard> */}
+        </Col>
+        <Col span={12}>
+          <div className="title_count text-left">
+            <span>历史<span style={{ fontWeight: 'bolder' }}>DAU</span></span>
+          </div>
+          <div
+            style={{
+              marginTop: '40px'
+            }}
+          >
+            <PlotsLine
+              data={props.dataBase.daily_dau}
+            />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={12}>col-12</Col>
+        <Col span={12}>col-12</Col>
+      </Row>
+
     </>
   );
 }

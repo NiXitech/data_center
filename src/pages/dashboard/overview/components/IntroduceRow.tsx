@@ -10,6 +10,7 @@ import { getCountNum } from '@/services/http/api';
 import PlotsLine from './plotsline';
 import { Badge, Divider, Layout } from 'antd';
 import BaseData from './base';
+import TableView from './table';
 
 // curl 'https://sandbox.api.nxglabs.io/data-center/v1/health'
 const IntroduceRow = () => {
@@ -65,10 +66,11 @@ const IntroduceRow = () => {
     try {
       const { code, data } = (await getCountNum()) as any;
       if (code === 200) {
-        setcountNumber(Number(data?.total_user_count));
-        setDau(Number(data?.today_dau));
-        setdauhistory(data.daily_dau);
-        jisuanhuanbi(data);
+        setDatabase(data)
+        // setcountNumber(Number(data?.total_user_count));
+        // setDau(Number(data?.today_dau));
+        // setdauhistory(data.daily_dau);
+        // jisuanhuanbi(data);
       } else {
         console.log('getCountNum error!');
       }
@@ -103,12 +105,15 @@ const IntroduceRow = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            padding: '24px'
           }}
         >
           {/* 基本数据 */}
-          <BaseData dataBase={dataBase} />
+          {/* <BaseData dataBase={dataBase} /> */}
           {/* 图标数据 */}
-
+          <div className='w_fill'>
+            <TableView dataBase={dataBase} />
+          </div>
 
 
         </Layout>
