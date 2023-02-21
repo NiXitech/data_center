@@ -11,14 +11,14 @@ interface propsType {
 const TableView = (props: propsType): JSX.Element => {
   return (
     <>
-      <Row gutter={[24, 24]}>
+      <Row gutter={[24, 12]}>
         <Col span={12}>
           <div className="title_count text-left">
             <span>历史<span style={{ fontWeight: 'bolder' }}>DAU</span></span>
           </div>
           <div
             style={{
-              marginTop: '10px'
+              marginTop: '.2rem'
             }}
           >
             <PlotsLine
@@ -33,7 +33,7 @@ const TableView = (props: propsType): JSX.Element => {
           </div>
           <div
             style={{
-              marginTop: '10px'
+              marginTop: '.2rem'
             }}
           >
             <ColumnView data={formattedData(props.dataBase.sign_in, 'day', 'user_cnt')} Field={{ x: 'day', y: 'user_cnt' }} />
@@ -45,7 +45,7 @@ const TableView = (props: propsType): JSX.Element => {
           </div>
           <div
             style={{
-              marginTop: '10px'
+              marginTop: '.2rem'
             }}
           >
             <PlotsLine

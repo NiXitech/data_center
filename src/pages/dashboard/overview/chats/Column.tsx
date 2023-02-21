@@ -5,6 +5,7 @@ const ColumnView = (props: any): JSX.Element => {
   console.log('%c🀀 data', 'color: #aa00ff; font-size: 20px;', data);
 
   const config = {
+    height: 200,
     data,
     xField: Field.x,
     yField: Field.y,
