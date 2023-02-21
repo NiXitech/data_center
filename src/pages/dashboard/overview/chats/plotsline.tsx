@@ -7,6 +7,7 @@ const PlotsLine = (props: any) => {
   const { data, Field, setting } = props;
 
   const config = {
+    height: 200,
     data,
     xField: Field.x,
     yField: Field.y,
@@ -78,7 +79,7 @@ const PlotsLine = (props: any) => {
       },
     ],
     colorField: 'type',
-    color: ['#04A777', '#D90368', '#FEE9E1'],
+    color: ['#04A777', '#D90368', '#F3C969'],
   };
   return <Line {...config} />;
 };

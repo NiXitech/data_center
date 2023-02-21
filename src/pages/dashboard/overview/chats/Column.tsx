@@ -5,6 +5,7 @@ const ColumnView = (props: any): JSX.Element => {
   console.log('%c🀀 data', 'color: #aa00ff; font-size: 20px;', data);
 
   const config = {
+    height: 200,
     data,
     xField: Field.x,
     yField: Field.y,
@@ -12,7 +13,7 @@ const ColumnView = (props: any): JSX.Element => {
     seriesField: setting && setting.seriesField ? setting.seriesField : '',
     dodgePadding: 2,
     xAxis: {
-      type: 'timeCat',
+      // type: 'timeCat',
       tickCount: 8,
       line: {
         style: {
@@ -85,7 +86,6 @@ const ColumnView = (props: any): JSX.Element => {
     // },
   };
 
-  console.log('%c🀁 ', 'color: #e50000; font-size: 20px;', config);
   return (
     <>
       <Column {...config} />

@@ -109,7 +109,7 @@ const IntroduceRow = () => {
           }}
         >
           {/* 基本数据 */}
-          {/* <BaseData dataBase={dataBase} /> */}
+          <BaseData dataBase={dataBase} />
           {/* 图标数据 */}
           <div className='w_fill'>
             <TableView dataBase={dataBase} />
