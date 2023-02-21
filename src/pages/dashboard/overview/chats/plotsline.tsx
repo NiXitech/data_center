@@ -3,61 +3,32 @@ import { Line } from '@ant-design/plots';
 import { ThunderboltTwoTone } from '@ant-design/icons';
 
 const PlotsLine = (props: any) => {
-  // const data = [
-  //   {
-  //     year: '1991',
-  //     value: 3,
-  //   },
-  //   {
-  //     year: '1992',
-  //     value: 4,
-  //   },
-  //   {
-  //     year: '1993',
-  //     value: 3.5,
-  //   },
-  //   {
-  //     year: '1994',
-  //     value: 5,
-  //   },
-  //   {
-  //     year: '1995',
-  //     value: 4.9,
-  //   },
-  //   {
-  //     year: '1996',
-  //     value: 6,
-  //   },
-  //   {
-  //     year: '1997',
-  //     value: 7,
-  //   },
-  //   {
-  //     year: '1998',
-  //     value: 9,
-  //   },
-  //   {
-  //     year: '1999',
-  //     value: 13,
-  //   },
-  // ];
 
-  const { data } = props;
+  const { data, Field, setting } = props;
 
   const config = {
     data,
-    xField: 'date',
-    yField: 'count',
-    title: {
-      text: '111',
-      position: 'center',
-      style: {
-        color: '#fff'
-      }
-    },
+    xField: Field.x,
+    yField: Field.y,
+    seriesField: setting && setting.seriesField ? setting.seriesField : '',
     xAxis: {
       type: 'timeCat',
       tickCount: 8,
+      line: {
+        style: {
+          stroke: '#fff',
+          lineWidth: 1,
+          lineDash: [4, 5],
+          strokeOpacity: 1,
+          shadowColor: 'black',
+          shadowBlur: 10,
+          shadowOffsetX: 5,
+          shadowOffsetY: 5,
+          cursor: 'pointer',
+          color: '#fff'
+        }
+      }
+
     },
     yAxis: {
 
@@ -88,15 +59,15 @@ const PlotsLine = (props: any) => {
         fontSize: 8
       },
     },
-    point: {
-      size: 3,
-      shape: 'custom-point',
-      style: {
-        fill: '#E3B23C',
-        stroke: '#E3B23C40',
-        lineWidth: 6,
-      },
-    },
+    // point: {
+    //   size: 3,
+    //   shape: 'custom-point',
+    //   style: {
+    //     fill: '#E3B23C',
+    //     stroke: '#E3B23C40',
+    //     lineWidth: 6,
+    //   },
+    // },
     tooltip: {
       showMarkers: false,
     },
@@ -106,7 +77,8 @@ const PlotsLine = (props: any) => {
         type: 'custom-marker-interaction',
       },
     ],
-    color: '#04A777',
+    colorField: 'type',
+    color: ['#04A777', '#D90368', '#FEE9E1'],
   };
   return <Line {...config} />;
 };
