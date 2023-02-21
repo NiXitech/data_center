@@ -8,6 +8,7 @@ import { Liquid } from '@ant-design/plots';
 import { getCountNum } from '@/services/http/api';
 // import CountUp from 'react-countup';
 import PlotsLine from './plotsline';
+import { Divider, Layout } from 'antd';
 
 // curl 'https://sandbox.api.nxglabs.io/data-center/v1/health'
 const IntroduceRow = () => {
@@ -16,6 +17,7 @@ const IntroduceRow = () => {
   const handle = useFullScreenHandle();
   const [countNumber, setcountNumber] = useState(0);
   const [dau, setDau] = useState(0);
+  const [dauhistory, setdauhistory] = useState([]);
   // const [rightnow, setRightnow] = useState('')
 
   // const getDate = () => {
@@ -26,9 +28,14 @@ const IntroduceRow = () => {
 
   const getAllNum = async () => {
     try {
-      const { data } = (await getCountNum()) as any;
-      setcountNumber(Number(data?.total_user_count));
-      setDau(Number(data?.today_dau));
+      const { code, data } = (await getCountNum()) as any;
+      if (code === 200) {
+        setcountNumber(Number(data?.total_user_count));
+        setDau(Number(data?.today_dau));
+        setdauhistory(data.daily_dau);
+      } else {
+        console.log('getCountNum error!');
+      }
     } catch (error) {}
   };
 
@@ -53,22 +60,88 @@ const IntroduceRow = () => {
             }}
           />
         )}
-        <ProCard gutter={16} ghost>
-          <ProCard
-            className="cardItem"
-            colSpan={12}
-            style={{ backgroundColor: '#2F2963', borderRadius: '24px' }}
-            layout="center"
-            direction="column"
-          >
-            <div className="title_count">
-              <span>总用户量</span>
-            </div>
-            <div className="title_count">
-              <span>
+        <Layout
+        className='h_full'
+          style={{
+            backgroundColor: '#2F2963',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ProCard gutter={[16]} ghost wrap>
+            <ProCard
+              ghost
+              className="cardItem"
+              colSpan={12}
+              // style={{ backgroundColor: '#2F2963', borderRadius: '24px' }}
+              layout="center"
+              direction="column"
+            >
+              <div className="title_count">
+                <span>总用户量</span>
+              </div>
+              <div className="title_count">
+                <span>
+                  <Liquid
+                    className="Liquid_hidePercent"
+                    percent={countNumber / 1000000}
+                    wave={{
+                      length: 128,
+                    }}
+                    outline={{
+                      border: 4,
+                    }}
+                    pattern={{
+                      type: 'line',
+                    }}
+                    style={{
+                      color: '#fff',
+                      fontSize: '120px',
+                    }}
+                    statistic={{
+                      title: {
+                        content: JSON.stringify(countNumber),
+                        // @ts-ignore
+                        // customHtml: (container, view, datum) => {
+                        //   return <CountUp
+                        //     delay={1}
+                        //     end={countNumber}
+                        //     duration={1}
+                        //     redraw={true}
+                        //     start={0}
+                        //     preserveValue={true}
+                        //   />
+                        // },
+
+                        style: {
+                          transform: `translate(-50%, -50%)`,
+                        },
+                      },
+                      content: {},
+                    }}
+                  />
+                </span>
+              </div>
+            </ProCard>
+
+            <ProCard
+              ghost
+              className="cardItem"
+              colSpan={12}
+              // style={{ backgroundColor: '#2F2963', borderRadius: '24px' }}
+              layout="center"
+              direction="column"
+            >
+              <div className="title_count">
+                <span>
+                  今日<span style={{ fontWeight: 'bolder' }}>DAU</span>
+                </span>
+              </div>
+              <div className="title_count">
                 <Liquid
                   className="Liquid_hidePercent"
-                  percent={countNumber / 1000000}
+                  percent={dau / 100000}
                   wave={{
                     length: 128,
                   }}
@@ -84,15 +157,14 @@ const IntroduceRow = () => {
                   }}
                   statistic={{
                     title: {
-                      content: JSON.stringify(countNumber),
+                      content: JSON.stringify(dau),
                       // @ts-ignore
                       // customHtml: (container, view, datum) => {
                       //   return <CountUp
                       //     delay={1}
-                      //     end={countNumber}
+                      //     end={dau}
                       //     duration={1}
                       //     redraw={true}
-                      //     start={0}
                       //     preserveValue={true}
                       //   />
                       // },
@@ -104,70 +176,20 @@ const IntroduceRow = () => {
                     content: {},
                   }}
                 />
-              </span>
-            </div>
-            <div className="plots_overview">
-              <PlotsLine />
-            </div>
+              </div>
+
+              <div className="plots_overview">{/* <PlotsLine /> */}</div>
+            </ProCard>
           </ProCard>
-
-          <ProCard
-            className="cardItem"
-            colSpan={12}
-            style={{ backgroundColor: '#2F2963', borderRadius: '24px' }}
-            layout="center"
-            direction="column"
-          >
-            <div className="title_count">
-              <span>
-                今日<span style={{ fontWeight: 'bolder' }}>DAU</span>
-              </span>
-            </div>
-            <div className="title_count">
-              <Liquid
-                className="Liquid_hidePercent"
-                percent={dau / 100000}
-                wave={{
-                  length: 128,
-                }}
-                outline={{
-                  border: 4,
-                }}
-                pattern={{
-                  type: 'line',
-                }}
-                style={{
-                  color: '#fff',
-                  fontSize: '120px',
-                }}
-                statistic={{
-                  title: {
-                    content: JSON.stringify(dau),
-                    // @ts-ignore
-                    // customHtml: (container, view, datum) => {
-                    //   return <CountUp
-                    //     delay={1}
-                    //     end={dau}
-                    //     duration={1}
-                    //     redraw={true}
-                    //     preserveValue={true}
-                    //   />
-                    // },
-
-                    style: {
-                      transform: `translate(-50%, -50%)`,
-                    },
-                  },
-                  content: {},
-                }}
-              />
-            </div>
-
-            <div className="plots_overview">
-              <PlotsLine />
-            </div>
+          <ProCard ghost colSpan={24} gutter={[16, 24]} layout="center">
+            <ProCard ghost colSpan={16} style={{padding:'24px'}}>
+              <div className="title_plots">
+                <span>历史DAU</span>
+              </div>
+              <PlotsLine data={dauhistory} />
+            </ProCard>
           </ProCard>
-        </ProCard>
+        </Layout>
       </div>
     </FullScreen>
   );
