@@ -36,7 +36,7 @@ const BaseData = (props: propsType): JSX.Element => {
 
   useEffect(() => {
     jisuanhuanbi();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataBase]);
 
   const formatter = (value: number) => <CountUp start={100} end={value} separator="," />;
@@ -48,14 +48,14 @@ const BaseData = (props: propsType): JSX.Element => {
 
   const cardStyle_percent = {
     color: '#e2ea49',
-    fontSize: '48px',
+    fontSize: '24px',
   };
 
   return (
     <>
       <ProCard ghost direction="row">
         <ProCard ghost colSpan={6} layout="center">
-          <Row gutter={36}>
+          <Row gutter={24}>
             <Col>
               <div className="card_title">总用户量</div>
               <Statistic
@@ -66,7 +66,7 @@ const BaseData = (props: propsType): JSX.Element => {
               />
             </Col>
             <Col>
-              <span className='card_title'>环比昨日</span>
+              {/* <span className='card_title_2'>环比昨日</span> */}
               <Statistic
                 // title="环比昨日"
                 value={circle_yestoday_count}
@@ -81,7 +81,7 @@ const BaseData = (props: propsType): JSX.Element => {
         </ProCard>
 
         <ProCard ghost colSpan={6} layout="center">
-          <Row gutter={36}>
+          <Row gutter={24}>
             <Col>
               <div className="card_title">今日DAU</div>
               <Statistic
@@ -91,7 +91,7 @@ const BaseData = (props: propsType): JSX.Element => {
               />
             </Col>
             <Col>
-              <span className='card_title'>环比昨日</span>
+              {/* <span className='card_title'>环比昨日</span> */}
               <Statistic
                 value={circle_yestoday_dau}
                 precision={2}
@@ -105,9 +105,11 @@ const BaseData = (props: propsType): JSX.Element => {
         </ProCard>
 
         <ProCard ghost colSpan={6} layout="center">
-          <Row gutter={36}>
+          <Row gutter={24}>
             <Col>
-              <div className="card_title">发邀请人数  <AndroidOutlined style={{color: '#e2ea49'}}/></div>
+              <div className="card_title">
+                发邀请人数 <AndroidOutlined style={{ color: '#e2ea49' }} />
+              </div>
               <Statistic
                 value={dataBase?.referral[0]?.invite_user_cnt}
                 formatter={(value) => formatter(Number(value))}
@@ -115,13 +117,13 @@ const BaseData = (props: propsType): JSX.Element => {
               />
             </Col>
             <Col>
-              <span className='card_title'>接受邀请人数</span>
+              {/* <span className='card_title'>接受邀请人数</span> */}
               <Statistic
                 value={dataBase?.referral[0]?.invitee_user_cnt}
                 precision={2}
                 valueStyle={cardStyle_percent}
-                prefix={<ArrowUpOutlined />}
-                // suffix="%"
+                // prefix={<ArrowUpOutlined />}
+                suffix="接受邀请"
                 formatter={(value) => formatter(Number(value))}
               />
             </Col>
@@ -129,9 +131,11 @@ const BaseData = (props: propsType): JSX.Element => {
         </ProCard>
 
         <ProCard ghost colSpan={6} layout="center">
-        <Row gutter={36}>
+          <Row gutter={24}>
             <Col>
-              <div className="card_title">发邀请人数  <AppleOutlined style={{color: '#e2ea49'}}/></div>
+              <div className="card_title">
+                发邀请人数 <AppleOutlined style={{ color: '#e2ea49' }} />
+              </div>
               <Statistic
                 value={dataBase?.referral[1]?.invite_user_cnt}
                 formatter={(value) => formatter(Number(value))}
@@ -139,20 +143,18 @@ const BaseData = (props: propsType): JSX.Element => {
               />
             </Col>
             <Col>
-              <span className='card_title'>接受邀请人数</span>
+              {/* <span className='card_title'>接受邀请人数</span> */}
               <Statistic
                 value={dataBase?.referral[1]?.invitee_user_cnt}
                 precision={2}
                 valueStyle={cardStyle_percent}
-                prefix={<ArrowUpOutlined />}
-                // suffix="%"
+                // prefix={<ArrowUpOutlined />}
+                suffix="接受邀请"
                 formatter={(value) => formatter(Number(value))}
               />
             </Col>
           </Row>
         </ProCard>
-
-
       </ProCard>
     </>
   );
