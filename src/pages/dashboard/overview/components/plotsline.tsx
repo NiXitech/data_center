@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import { Line } from '@ant-design/plots';
+import { ThunderboltTwoTone } from '@ant-design/icons';
 
 const PlotsLine = (props: any) => {
   // const data = [
@@ -47,33 +48,65 @@ const PlotsLine = (props: any) => {
     data,
     xField: 'date',
     yField: 'count',
-    label: {},
-    point: {
-      size: 5,
-      shape: 'diamond',
+    title: {
+      text: '111',
+      position: 'center',
       style: {
-        fill: 'white',
-        stroke: '#5B8FF9',
-        lineWidth: 2,
+        color: '#fff'
+      }
+    },
+    xAxis: {
+      type: 'timeCat',
+      tickCount: 8,
+    },
+    yAxis: {
+
+      grid: {
+        line: {
+          style: {
+            stroke: '#fff',
+            lineWidth: 1,
+            lineDash: [4, 5],
+            strokeOpacity: 1,
+            shadowColor: 'black',
+            shadowBlur: 10,
+            shadowOffsetX: 5,
+            shadowOffsetY: 5,
+            cursor: 'pointer',
+            color: '#fff'
+          }
+        }
+      }
+    },
+
+    autoFit: true,
+    smooth: true,
+    label: {
+      style: {
+        fill: '#fff',
+        opacity: 0.8,
+        fontSize: 8
+      },
+    },
+    point: {
+      size: 3,
+      shape: 'custom-point',
+      style: {
+        fill: '#E3B23C',
+        stroke: '#E3B23C40',
+        lineWidth: 6,
       },
     },
     tooltip: {
       showMarkers: false,
     },
-    state: {
-      active: {
-        style: {
-          shadowBlur: 4,
-          stroke: '#000',
-          fill: 'red',
-        },
-      },
-    },
+
     interactions: [
       {
-        type: 'marker-active',
+        type: 'custom-marker-interaction',
       },
     ],
+    color: '#04A777',
   };
   return <Line {...config} />;
 };
