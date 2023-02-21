@@ -7,7 +7,7 @@ import { Liquid } from '@ant-design/plots';
 // import moment from "moment";
 import { getCountNum } from '@/services/http/api';
 // import CountUp from 'react-countup';
-import PlotsLine from './plotsline';
+import PlotsLine from '../chats/plotsline';
 import { Badge, Divider, Layout } from 'antd';
 import BaseData from './base';
 import TableView from './table';
