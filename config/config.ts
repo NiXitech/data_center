@@ -48,7 +48,6 @@ export default defineConfig({
   proxy: proxy[REACT_APP_ENV || "dev"],
   define: {
     API_REQUEST_URL: " https://api.nxglabs.io",
-    API_REQUEST_URL_SOCIAL: "https://api.openai.com",
     Authorization_Token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWY3MGE2NTYtNmYxMS00YTA4LWIzNjEtYmU4Mzg3NGI3NWJkIiwiZGlkIjoiMzAxM2Y1NTUyMjA0NGUzNzg5OWMxM2ZjNTdhZGNiMmQiLCJkdHlwZSI6ImlvcyIsImFwcCI6Inh5ei55b3VnYWwubmJyaWVsIiwiZXhwIjoxNjc5MTQwMzEyLCJpYXQiOjE2NzY1NDgzMTJ9.MOdW1IKa8k_Pv4bcoX6pvmNQPBbPC3jHWoQyjZolBus",
   },
