@@ -8,7 +8,7 @@ import { Liquid } from '@ant-design/plots';
 import { getCountNum } from '@/services/http/api';
 // import CountUp from 'react-countup';
 import PlotsLine from './plotsline';
-import { Divider, Layout } from 'antd';
+import { Badge, Divider, Layout } from 'antd';
 
 // curl 'https://sandbox.api.nxglabs.io/data-center/v1/health'
 const IntroduceRow = () => {
@@ -18,6 +18,8 @@ const IntroduceRow = () => {
   const [countNumber, setcountNumber] = useState(0);
   const [dau, setDau] = useState(0);
   const [dauhistory, setdauhistory] = useState([]);
+  const [circle_yestoday_count, setcircle_yestoday_count] = useState('');
+  const [circle_yestoday_dau, setcircle_yestoday_dau] = useState('');
   // const [rightnow, setRightnow] = useState('')
 
   // const getDate = () => {
@@ -26,6 +28,26 @@ const IntroduceRow = () => {
   //   setRightnow(now)
   // }
 
+  const jisuanhuanbi = (data: any) => {
+    const yestoday_dau = Number(data?.daily_dau.pop().count);
+    const minu_dau = Number(data?.today_dau) - yestoday_dau;
+    if (data.today_incr_count && Number(data?.today_incr_count) === 0) {
+      setcircle_yestoday_count('0');
+    } else {
+      let percent = Number(data?.today_incr_count) / Number(data?.yesterday_total_user_count);
+      percent = Number((percent * 100).toFixed(2));
+      setcircle_yestoday_count((percent > 0 ? '+' + percent : percent) + '%');
+    }
+
+    if (minu_dau === 0) {
+      setcircle_yestoday_dau('0');
+    } else {
+      let c_d = Number(minu_dau / yestoday_dau);
+      c_d = Number((c_d * 100).toFixed(2));
+      setcircle_yestoday_dau((c_d > 0 ? '+' + c_d : c_d) + '%');
+    }
+  };
+
   const getAllNum = async () => {
     try {
       const { code, data } = (await getCountNum()) as any;
@@ -33,6 +55,7 @@ const IntroduceRow = () => {
         setcountNumber(Number(data?.total_user_count));
         setDau(Number(data?.today_dau));
         setdauhistory(data.daily_dau);
+        jisuanhuanbi(data);
       } else {
         console.log('getCountNum error!');
       }
@@ -61,7 +84,7 @@ const IntroduceRow = () => {
           />
         )}
         <Layout
-          className='h_full'
+          className="h_full"
           style={{
             backgroundColor: '#2F2963',
             display: 'flex',
@@ -78,9 +101,18 @@ const IntroduceRow = () => {
               layout="center"
               direction="column"
             >
-              <div className="title_count">
-                <span>总用户量</span>
-              </div>
+              <Badge
+                className="huanbi_yestoday"
+                color={'rgba(0,0,0,0)'}
+                size="default"
+                offset={[50, 0]}
+                count={circle_yestoday_count}
+                overflowCount={999}
+              >
+                <div className="title_count">
+                  <span>总用户量</span>
+                </div>
+              </Badge>
               <div className="title_count">
                 <span>
                   <Liquid
@@ -133,11 +165,19 @@ const IntroduceRow = () => {
               layout="center"
               direction="column"
             >
-              <div className="title_count">
-                <span>
-                  今日<span style={{ fontWeight: 'bolder' }}>DAU</span>
-                </span>
-              </div>
+              <Badge
+                color={'rgba(0,0,0,0)'}
+                size="default"
+                offset={[80, 0]}
+                count={circle_yestoday_dau}
+                overflowCount={999999999}
+              >
+                <div className="title_count">
+                  <span>
+                    今日<span style={{ fontWeight: 'bolder' }}>DAU</span>
+                  </span>
+                </div>
+              </Badge>
               <div className="title_count">
                 <Liquid
                   className="Liquid_hidePercent"
@@ -168,19 +208,28 @@ const IntroduceRow = () => {
                       //     preserveValue={true}
                       //   />
                       // },
+                      // customHtml: (container, view, datum) => {
+                      //   return (
+                      //     <>
+
+                      //     </>
+                      //   )
+                      // },
 
                       style: {
                         transform: `translate(-50%, -50%)`,
                       },
                     },
-                    content: {},
+                    content: {
+                      
+                    },
                   }}
                 />
               </div>
-
               <div className="plots_overview">{/* <PlotsLine /> */}</div>
             </ProCard>
           </ProCard>
+
           <ProCard ghost colSpan={24} layout="center">
             <ProCard ghost colSpan={20} style={{ padding: '24px' }}>
               <div className="title_count text-left">
