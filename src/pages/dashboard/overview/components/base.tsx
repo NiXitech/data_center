@@ -1,4 +1,4 @@
-import { ArrowUpOutlined } from '@ant-design/icons';
+import { AndroidOutlined, AppleOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import ProCard from '@ant-design/pro-card';
 import { Col, Row, Statistic } from 'antd';
 import { useState, useEffect } from 'react';
@@ -107,21 +107,21 @@ const BaseData = (props: propsType): JSX.Element => {
         <ProCard ghost colSpan={6} layout="center">
           <Row gutter={36}>
             <Col>
-              <div className="card_title">留存率</div>
+              <div className="card_title">发邀请人数  <AndroidOutlined style={{color: '#e2ea49'}}/></div>
               <Statistic
-                value={dataBase?.daily_retention?.pop()}
+                value={dataBase?.referral[0]?.invite_user_cnt}
                 formatter={(value) => formatter(Number(value))}
                 valueStyle={cardStyle}
               />
             </Col>
             <Col>
-              <span className='card_title'>留存</span>
+              <span className='card_title'>接受邀请人数</span>
               <Statistic
-                value={circle_yestoday_dau}
+                value={dataBase?.referral[0]?.invitee_user_cnt}
                 precision={2}
                 valueStyle={cardStyle_percent}
                 prefix={<ArrowUpOutlined />}
-                suffix="%"
+                // suffix="%"
                 formatter={(value) => formatter(Number(value))}
               />
             </Col>
@@ -129,23 +129,23 @@ const BaseData = (props: propsType): JSX.Element => {
         </ProCard>
 
         <ProCard ghost colSpan={6} layout="center">
-          <Row gutter={36}>
+        <Row gutter={36}>
             <Col>
-              <div className="card_title">邀请人数{dataBase?.referral[0]?.platform}</div>
+              <div className="card_title">发邀请人数  <AppleOutlined style={{color: '#e2ea49'}}/></div>
               <Statistic
-                value={Number(dataBase?.referral[0]?.invite_user_cnt)}
+                value={dataBase?.referral[1]?.invite_user_cnt}
                 formatter={(value) => formatter(Number(value))}
                 valueStyle={cardStyle}
               />
             </Col>
             <Col>
-              <span className='card_title'>被邀请进来人数</span>
+              <span className='card_title'>接受邀请人数</span>
               <Statistic
-                value={circle_yestoday_dau}
+                value={dataBase?.referral[1]?.invitee_user_cnt}
                 precision={2}
                 valueStyle={cardStyle_percent}
                 prefix={<ArrowUpOutlined />}
-                suffix="%"
+                // suffix="%"
                 formatter={(value) => formatter(Number(value))}
               />
             </Col>
