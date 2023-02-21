@@ -55,7 +55,7 @@ const BaseData = (props: propsType): JSX.Element => {
     <>
       <ProCard ghost direction="row">
         <ProCard ghost colSpan={6} layout="center">
-          <Row gutter={24}>
+          <Row gutter={0}>
             <Col>
               <div className="card_title">总用户量</div>
               <Statistic
@@ -66,7 +66,7 @@ const BaseData = (props: propsType): JSX.Element => {
               />
             </Col>
             <Col>
-              {/* <span className='card_title_2'>环比昨日</span> */}
+              <span className='card_title_2'>环比昨日</span>
               <Statistic
                 // title="环比昨日"
                 value={circle_yestoday_count}
@@ -81,7 +81,7 @@ const BaseData = (props: propsType): JSX.Element => {
         </ProCard>
 
         <ProCard ghost colSpan={6} layout="center">
-          <Row gutter={24}>
+          <Row gutter={0}>
             <Col>
               <div className="card_title">今日DAU</div>
               <Statistic
@@ -91,7 +91,7 @@ const BaseData = (props: propsType): JSX.Element => {
               />
             </Col>
             <Col>
-              {/* <span className='card_title'>环比昨日</span> */}
+              <span className='card_title_2'>环比昨日</span>
               <Statistic
                 value={circle_yestoday_dau}
                 precision={2}
