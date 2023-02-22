@@ -59,10 +59,15 @@ const Exchange = () => {
             ellipsis: true
         },
         {
-            title: '提现券ID',
-            dataIndex: 'coupon_id',
-            ellipsis: true,
+            title: '交易Hash值',
+            dataIndex: 'tx_hash',
+            ellipsis: true
         },
+        // {
+        //     title: '提现券ID',
+        //     dataIndex: 'coupon_id',
+        //     ellipsis: true,
+        // },
         // {
         //     title: '操作',
         //     valueType: 'option',
