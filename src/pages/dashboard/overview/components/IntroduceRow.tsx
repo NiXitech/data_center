@@ -79,7 +79,7 @@ const IntroduceRow = () => {
 
   useEffect(() => {
     getAllNum();
-    const timer = setInterval(getAllNum, 5000);
+    const timer = setInterval(getAllNum, 10000);
     return function cleanup() {
       clearInterval(timer);
     };
