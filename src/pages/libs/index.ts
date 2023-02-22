@@ -10,6 +10,19 @@ export const formattedData = (list: [], xKey: string, yKey: string) => {
   return data;
 };
 
+function compareDate(a: { date: string | number | Date; }, b: { date: string | number | Date; }) {
+  const dateA = new Date(a.date);
+  const dateB = new Date(b.date);
+  if (dateA < dateB) {
+    return -1;
+  }
+  if (dateA > dateB) {
+    return 1;
+  }
+  return 0;
+}
+
+
 export const retentionData = (list: []) => {
   const data: any[] = [];
   list.forEach((ele: any) => {
@@ -22,5 +35,6 @@ export const retentionData = (list: []) => {
       data.push(params);
     }
   });
-  return data;
+  const sortedData = data.sort(compareDate);
+  return sortedData;
 };
