@@ -1,4 +1,4 @@
-import { AndroidOutlined, AppleOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { AndroidOutlined, AppleOutlined, ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import ProCard from '@ant-design/pro-card';
 import { Col, Row, Statistic } from 'antd';
 import { useState, useEffect } from 'react';
@@ -72,7 +72,7 @@ const BaseData = (props: propsType): JSX.Element => {
                 value={circle_yestoday_count}
                 precision={2}
                 valueStyle={cardStyle_percent}
-                prefix={<ArrowUpOutlined />}
+                prefix={circle_yestoday_count >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
                 suffix="%"
                 formatter={(value) => formatter(Number(value))}
               />
@@ -96,7 +96,7 @@ const BaseData = (props: propsType): JSX.Element => {
                 value={circle_yestoday_dau}
                 precision={2}
                 valueStyle={cardStyle_percent}
-                prefix={<ArrowUpOutlined />}
+                prefix={circle_yestoday_dau >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
                 suffix="%"
                 formatter={(value) => formatter(Number(value))}
               />
