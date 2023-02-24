@@ -218,11 +218,27 @@ export async function editExchange(params: object) {
   });
 }
 
-/** 编辑交易所数据数据 */
+/** 删除交易所数据 */
 export async function delExchange(params: object) {
   debugger
   return new Promise((resolve, reject) => {
     http({ method: "delete", url: "/wallet/v1/exchange/backend", params }).then(
+      (res) => {
+        resolve(res);
+        return res;
+      },
+      (error) => {
+        console.log("网络异常~", error);
+        reject(error);
+      }
+    );
+  });
+}
+
+/** 新建交易所数据 */
+export async function putExchange(params: object) {
+  return new Promise((resolve, reject) => {
+    http({ method: "put", url: "/wallet/v1/exchange/backend", params }).then(
       (res) => {
         resolve(res);
         return res;
@@ -286,7 +302,8 @@ export async function getCountNum() {
 /** chatgpt */
 export async function chatgpt(params: object) {
   return new Promise((resolve, reject) => {
-    http({ method: "post", url: "/v1/completions", params: {prompt: params?.prompt || '', model: 'text-davinci-003', max_tokens: 2000} }).then(
+    // params: {prompt: params?.prompt || '', model: 'text-davinci-003', max_tokens: 2000} }
+    http({ method: "post", url: "/witcoin/v1/chat", params: {data: {text: params?.prompt}}}).then(
       (res) => {
         resolve(res);
         return res;

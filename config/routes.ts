@@ -42,7 +42,7 @@ export default [
   },
   {
     path: "/dashboard",
-    name: "仪表盘",
+    name: "数据看板",
     icon: "dashboard",
     routes: [
       {
@@ -74,7 +74,7 @@ export default [
         component: "./dashboard/exchange",
       },
       {
-        name: "crushe提现审核",
+        name: "提现订单处理",
         icon: "smile",
         path: "/dashboard/withdraw",
         component: "./dashboard/withdraw",
