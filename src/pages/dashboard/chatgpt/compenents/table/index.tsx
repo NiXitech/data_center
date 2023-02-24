@@ -1,6 +1,7 @@
 import { useState } from "react";
 // import { chatgpt } from '@/services/ant-design-pro/api'
-import { chatgpt } from '@/services/socialapi/api'
+import { chatgpt, bot } from '@/services/socialapi/api'
+// import { chatgpt } from '@/services/http/api'
 
 const ChatGpt = () => {
     const [input, setInput] = useState<string>("");
@@ -12,20 +13,22 @@ const ChatGpt = () => {
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try {
-            const { choices } = await chatgpt({
-                prompt: input,
-                max_tokens: 100,
-                temperature: 0.5,
-                n: 1,
-                stop: "\n",
-            }) as any
-            console.log('choices-------:>', choices)
-            setOutput(choices[0].text);
-        } catch (error) {
-            console.error(error);
-            // setOutput("Sorry, something went wrong.");
-        }
+        const reult = await bot()
+        console.log('嘿嘿嘿嘿嘿', reult)
+        // try {
+        //     const { choices } = await chatgpt({
+        //         prompt: input,
+        //         max_tokens: 100,
+        //         temperature: 0.5,
+        //         n: 1,
+        //         stop: "\n",
+        //     }) as any
+        //     console.log('choices-------:>', choices)
+        //     setOutput(choices[0].text);
+        // } catch (error) {
+        //     console.error(error);
+        //     // setOutput("Sorry, something went wrong.");
+        // }
     };
 
     return (
