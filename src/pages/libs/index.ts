@@ -38,3 +38,12 @@ export const retentionData = (list: []) => {
   const sortedData = data.sort(compareDate);
   return sortedData;
 };
+
+// 最近30天数据
+export const getLast30DaysData = (sortedData: any[]) => {
+  const today = new Date();
+  const last30Days = new Date(today.setDate(today.getDate() - 30));
+  const last30DaysData = sortedData.filter((ele: any) => new Date(ele.date) >= last30Days);
+  return last30DaysData;
+}
+

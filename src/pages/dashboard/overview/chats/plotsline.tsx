@@ -13,7 +13,7 @@ const PlotsLine = (props: any) => {
     yField: Field.y,
     seriesField: setting && setting.seriesField ? setting.seriesField : '',
     xAxis: {
-      type: 'timeCat',
+      type: 'category',
       tickCount: 8,
       line: {
         style: {
@@ -53,13 +53,13 @@ const PlotsLine = (props: any) => {
 
     autoFit: true,
     smooth: true,
-    label: {
-      style: {
-        fill: '#fff',
-        opacity: 0.8,
-        fontSize: 8
-      },
-    },
+    // label: {
+    //   style: {
+    //     fill: '#fff',
+    //     opacity: 0.8,
+    //     fontSize: 8
+    //   },
+    // },
     // point: {
     //   size: 3,
     //   shape: 'custom-point',
