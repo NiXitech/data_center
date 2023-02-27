@@ -36,7 +36,7 @@ const PlotsLine = (props: any) => {
       grid: {
         line: {
           style: {
-            stroke: '#fff',
+            stroke: '#000',
             lineWidth: 1,
             lineDash: [4, 5],
             strokeOpacity: 1,

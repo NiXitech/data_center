@@ -13,7 +13,7 @@ const ColumnView = (props: any): JSX.Element => {
     seriesField: setting && setting.seriesField ? setting.seriesField : '',
     dodgePadding: 2,
     xAxis: {
-      // type: 'timeCat',
+      type: 'timeCat',
       tickCount: 8,
       line: {
         style: {
