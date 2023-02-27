@@ -52,7 +52,12 @@ const BaseData = (props: propsType): JSX.Element => {
   };
 
   const cardStyle_percent = {
-    color: '#e2ea49',
+    color: 'red',
+    fontSize: '1rem',
+  };
+
+  const cardStyle_percent_down = {
+    color: 'green',
     fontSize: '1rem',
   };
 
@@ -68,89 +73,100 @@ const BaseData = (props: propsType): JSX.Element => {
   return (
     <>
       {/* <ProCard ghost direction="row" gutter={12}> */}
-        {/* <ProCard colSpan={4} layout="center" {...procardstyle}> */}
-          <Row gutter={0} justify="space-between" style={{width:'100%'}} wrap={false}>
-            <Col {...procardstyle}>
-              <div className="card_title">今日DAU</div>
-              <span style={{ display: 'flex' }}>
-                <Statistic
-                  value={dataBase?.today_dau}
-                  formatter={(value) => formatter(Number(value))}
-                  valueStyle={cardStyle}
-                />
-                <Statistic
-                  value={circle_yestoday_dau}
-                  precision={2}
-                  valueStyle={cardStyle_percent}
-                  prefix={circle_yestoday_dau >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-                  suffix="%"
-                  formatter={(value) => formatter(Number(value))}
-                />
-              </span>
-            </Col>
+      {/* <ProCard colSpan={4} layout="center" {...procardstyle}> */}
+      <Row gutter={0} justify="space-between" style={{ width: '100%' }} wrap={false}>
+        <Col {...procardstyle}>
+          <div className="card_title">今日DAU</div>
+          <span style={{ display: 'flex' }}>
+            <Statistic
+              value={dataBase?.today_dau}
+              formatter={(value) => formatter(Number(value))}
+              valueStyle={cardStyle}
+            />
+            <Statistic
+              value={circle_yestoday_dau}
+              precision={2}
+              valueStyle={circle_yestoday_dau > 0 ? cardStyle_percent : cardStyle_percent_down}
+              prefix={
+                circle_yestoday_dau > 0 ? (
+                  <ArrowUpOutlined />
+                ) : (
+                  <ArrowDownOutlined style={{ color: 'green' }} />
+                )
+              }
+              suffix="%"
+              formatter={(value) => formatter(Number(value))}
+            />
+          </span>
+        </Col>
 
-            <Col {...procardstyle}>
-              <div className="card_title">今日新增</div>
-              <Statistic
-                value={dataBase?.today_incr_count}
-                formatter={(value) => formatter(Number(value))}
-                valueStyle={cardStyle}
-              />
-            </Col>
+        <Col {...procardstyle}>
+          <div className="card_title">今日新增</div>
+          <Statistic
+            value={dataBase?.today_incr_count}
+            formatter={(value) => formatter(Number(value))}
+            valueStyle={cardStyle}
+          />
+        </Col>
 
-            <Col {...procardstyle}>
-              <div className="card_title">累计注册数</div>
-              <span style={{ display: 'flex' }}>
-                <Statistic
-                  // title="总用户量"
-                  value={dataBase?.total_user_count}
-                  formatter={(value) => formatter(Number(value))}
-                  valueStyle={cardStyle}
-                />
-                <Statistic
-                  // title="环比昨日"
-                  value={circle_yestoday_count}
-                  precision={2}
-                  valueStyle={cardStyle_percent}
-                  prefix={circle_yestoday_count >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-                  suffix="%"
-                  formatter={(value) => formatter(Number(value))}
-                />
-              </span>
-            </Col>
+        <Col {...procardstyle}>
+          <div className="card_title">累计注册数</div>
+          <span style={{ display: 'flex' }}>
+            <Statistic
+              // title="总用户量"
+              value={dataBase?.total_user_count}
+              formatter={(value) => formatter(Number(value))}
+              valueStyle={cardStyle}
+            />
+            <Statistic
+              // title="环比昨日"
+              value={circle_yestoday_count}
+              precision={2}
+              valueStyle={circle_yestoday_count >= 0 ? cardStyle_percent : cardStyle_percent_down}
+              prefix={
+                circle_yestoday_count >= 0 ? (
+                  <ArrowUpOutlined />
+                ) : (
+                  <ArrowDownOutlined style={{ color: 'green' }} />
+                )
+              }
+              suffix="%"
+              formatter={(value) => formatter(Number(value))}
+            />
+          </span>
+        </Col>
 
-            <Col {...procardstyle}>
-              <div className="card_title">累计发邀请人数</div>
-              <Statistic
-                value={
-                  Number(dataBase?.referral[0]?.invite_user_cnt) +
-                  Number(dataBase?.referral[1]?.invite_user_cnt)
-                }
-                formatter={(value) => formatter(Number(value))}
-                valueStyle={cardStyle}
-              />
-            </Col>
+        <Col {...procardstyle}>
+          <div className="card_title">累计发邀请人数</div>
+          <Statistic
+            value={
+              Number(dataBase?.referral[0]?.invite_user_cnt) +
+              Number(dataBase?.referral[1]?.invite_user_cnt)
+            }
+            formatter={(value) => formatter(Number(value))}
+            valueStyle={cardStyle}
+          />
+        </Col>
 
-            <Col {...procardstyle}>
-              <div className="card_title">累计接受邀请人数</div>
-              <Statistic
-                // title="接受邀请人数"
-                value={
-                  Number(dataBase?.referral[0]?.invitee_user_cnt) +
-                  Number(dataBase?.referral[1]?.invitee_user_cnt)
-                }
-                precision={2}
-                valueStyle={cardStyle}
-                // prefix={<ArrowUpOutlined />}
-                // suffix="累计接受邀请人数"
-                formatter={(value) => formatter(Number(value))}
-              />
-            </Col>
+        <Col {...procardstyle}>
+          <div className="card_title">累计接受邀请人数</div>
+          <Statistic
+            // title="接受邀请人数"
+            value={
+              Number(dataBase?.referral[0]?.invitee_user_cnt) +
+              Number(dataBase?.referral[1]?.invitee_user_cnt)
+            }
+            precision={2}
+            valueStyle={cardStyle}
+            // prefix={<ArrowUpOutlined />}
+            // suffix="累计接受邀请人数"
+            formatter={(value) => formatter(Number(value))}
+          />
+        </Col>
+      </Row>
+      {/* </ProCard> */}
 
-          </Row>
-        {/* </ProCard> */}
-
-        {/* <ProCard colSpan={4} layout="center" {...procardstyle}>
+      {/* <ProCard colSpan={4} layout="center" {...procardstyle}>
           <Row gutter={0}>
             <Col>
               <div className="card_title">今日新增</div>
@@ -188,7 +204,7 @@ const BaseData = (props: propsType): JSX.Element => {
           </Row>
         </ProCard> */}
 
-        {/* <ProCard colSpan={11} layout="center" {...procardstyle}>
+      {/* <ProCard colSpan={11} layout="center" {...procardstyle}>
           <Row gutter={0}>
             <Col>
               <div className="card_title_4">累计发邀请人数</div>
@@ -220,7 +236,7 @@ const BaseData = (props: propsType): JSX.Element => {
           </Row>
         </ProCard> */}
 
-        {/* <ProCard colSpan={6} layout="center" {...procardstyle}>
+      {/* <ProCard colSpan={6} layout="center" {...procardstyle}>
           <Row gutter={0}>
             <Col span={12}>
               <div className="card_title">
