@@ -5,7 +5,7 @@ const ColumnView = (props: any): JSX.Element => {
   console.log('%c🀀 data', 'color: #aa00ff; font-size: 20px;', data);
 
   const config = {
-    height: 200,
+    height: 240,
     data,
     xField: Field.x,
     yField: Field.y,
@@ -13,7 +13,7 @@ const ColumnView = (props: any): JSX.Element => {
     seriesField: setting && setting.seriesField ? setting.seriesField : '',
     dodgePadding: 2,
     xAxis: {
-      // type: 'timeCat',
+      // type: 'category',
       tickCount: 8,
       line: {
         style: {
@@ -21,8 +21,8 @@ const ColumnView = (props: any): JSX.Element => {
           lineWidth: 1,
           lineDash: [4, 5],
           strokeOpacity: 1,
-          shadowColor: 'black',
-          shadowBlur: 10,
+          // shadowColor: 'black',
+          // shadowBlur: 10,
           shadowOffsetX: 5,
           shadowOffsetY: 5,
           cursor: 'pointer',
@@ -32,11 +32,10 @@ const ColumnView = (props: any): JSX.Element => {
 
     },
     yAxis: {
-
       grid: {
         line: {
           style: {
-            stroke: '#fff',
+            stroke: '#000',
             lineWidth: 1,
             lineDash: [4, 5],
             strokeOpacity: 1,
@@ -73,10 +72,14 @@ const ColumnView = (props: any): JSX.Element => {
         {
           type: 'interval-hide-overlap',
         }, // 数据标签文颜色自动调整
-        {
-          type: 'adjust-color',
-        },
+        // {
+        //   type: 'adjust-color',
+        // },
       ],
+      style: {
+        fill: '#e2ea49',
+        fontSize: 16
+      }
     },
     // xAxis: {
     //   label: {

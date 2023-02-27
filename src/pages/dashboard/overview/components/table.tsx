@@ -1,7 +1,7 @@
-import { formattedData, retentionData } from '@/pages/libs';
+import { formattedData, getLast30DaysData, retentionData } from '@/pages/libs';
 import { Col, Row, Space } from 'antd';
 import ColumnView from '../chats/Column';
-import PieView from '../chats/Pie';
+// import PieView from '../chats/Pie';
 import PlotsLine from '../chats/plotsline';
 
 interface propsType {
@@ -23,7 +23,7 @@ const TableView = (props: propsType): JSX.Element => {
               marginTop: '.2rem',
             }}
           >
-            <PlotsLine data={props.dataBase.daily_dau} Field={{ x: 'date', y: 'count' }} />
+            <PlotsLine data={getLast30DaysData(props.dataBase.daily_dau)} Field={{ x: 'date', y: 'count' }} />
           </div>
         </Col>
         <Col span={8}>
@@ -38,6 +38,7 @@ const TableView = (props: propsType): JSX.Element => {
             <ColumnView
               data={formattedData(props.dataBase.sign_in, 'day', 'user_cnt')}
               Field={{ x: 'day', y: 'user_cnt' }}
+              theme="dark"
             />
           </div>
         </Col>
@@ -51,7 +52,7 @@ const TableView = (props: propsType): JSX.Element => {
             }}
           >
             <PlotsLine
-              data={retentionData(props.dataBase.daily_retention).splice(Math.ceil(retentionData(props.dataBase.daily_retention).length / 2))}
+              data={getLast30DaysData(retentionData(props.dataBase.daily_retention))}
               Field={{ x: 'date', y: 'value' }}
               setting={{
                 seriesField: 'name',
