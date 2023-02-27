@@ -48,7 +48,7 @@ const BaseData = (props: propsType): JSX.Element => {
 
   const cardStyle = {
     color: '#fff',
-    fontSize: '2rem',
+    fontSize: '1.8rem',
   };
 
   const cardStyle_percent = {
