@@ -43,12 +43,7 @@ const ChatGpt = () => {
         <li>选择 电影摄影风格 8K 充满细节 输入input描述，生成接近真实照片风格</li>
         <li>input中含有敏感词会报错</li>
       </ul>
-      <iframe
-        src="https://baai-altdiffusion.hf.space"
-        frameBorder="0"
-        width="100%"
-        height="1900px"
-      />
+      <iframe src="https://baai-altdiffusion.hf.space" frameBorder="0" width="100%" height="1900px"> </iframe>
     </div>
   );
 };
