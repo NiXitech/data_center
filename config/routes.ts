@@ -80,7 +80,7 @@ export default [
         component: "./dashboard/withdraw",
       },
       {
-        name: "ChatGPT",
+        name: "AI生图",
         icon: "smile",
         path: "/dashboard/chatgpt",
         component: "./dashboard/chatgpt",
