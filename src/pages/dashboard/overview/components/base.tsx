@@ -19,22 +19,23 @@ const BaseData = (props: propsType): JSX.Element => {
   const [circle_yestoday_dau, setcircle_yestoday_dau] = useState(0);
 
   const jisuanhuanbi = () => {
-    const yestoday_dau = Number(dataBase?.daily_dau?.pop()?.count);
+    // const yestoday_dau = Number(dataBase?.daily_dau?.pop()?.count);
     if (dataBase.today_incr_count && Number(dataBase?.today_incr_count) === 0) {
       setcircle_yestoday_count(0);
     } else {
       let percent =
-        Number(dataBase?.today_incr_count) / Number(dataBase?.yesterday_total_user_count);
-      percent = Number((percent * 100).toFixed(2));
+        Number(dataBase?.yesterday_incr_count) / Number(dataBase?.yesterday_total_user_count);
+      percent = Number((percent * 100).toFixed(5));
       setcircle_yestoday_count(percent);
     }
 
-    const minu_dau = Number(dataBase?.today_dau) - yestoday_dau;
+    const len = dataBase?.daily_dau?.length - 2
+    const minu_dau = Number(dataBase?.yesterday_dau) - Number(dataBase?.daily_dau[len]?.count);
     if (minu_dau === 0) {
       setcircle_yestoday_dau(0);
     } else {
-      let c_d = Number(minu_dau / yestoday_dau);
-      c_d = Number((c_d * 100).toFixed(2));
+      let c_d = Number(minu_dau / Number(dataBase?.yesterday_dau));
+      c_d = Number((c_d * 100).toFixed(4));
       setcircle_yestoday_dau(c_d);
     }
   };
@@ -76,15 +77,15 @@ const BaseData = (props: propsType): JSX.Element => {
       {/* <ProCard colSpan={4} layout="center" {...procardstyle}> */}
       <Row gutter={0} justify="space-between" style={{ width: '100%' }} wrap={false}>
         <Col {...procardstyle}>
-          <div className="card_title">今日DAU</div>
+          <div className="card_title">昨日DAU</div>
           <span style={{ display: 'flex' }}>
             <Statistic
-              value={dataBase?.today_dau}
-              formatter={(value) => formatter(Number(value))}
+              value={dataBase?.yesterday_dau}
+              // formatter={(value) => formatter(Number(value))}
               valueStyle={cardStyle}
             />
             <Statistic
-              value={circle_yestoday_dau}
+              value={Math.abs(circle_yestoday_dau)}
               precision={2}
               valueStyle={circle_yestoday_dau > 0 ? cardStyle_percent : cardStyle_percent_down}
               prefix={
@@ -95,15 +96,15 @@ const BaseData = (props: propsType): JSX.Element => {
                 )
               }
               suffix="%"
-              formatter={(value) => formatter(Number(value))}
+              // formatter={(value) => formatter(Number(value))}
             />
           </span>
         </Col>
 
         <Col {...procardstyle}>
-          <div className="card_title">今日新增</div>
+          <div className="card_title">昨日新增</div>
           <Statistic
-            value={dataBase?.today_incr_count}
+            value={dataBase?.yesterday_incr_count}
             formatter={(value) => formatter(Number(value))}
             valueStyle={cardStyle}
           />
@@ -131,7 +132,7 @@ const BaseData = (props: propsType): JSX.Element => {
                 )
               }
               suffix="%"
-              formatter={(value) => formatter(Number(value))}
+              // formatter={(value) => formatter(Number(value))}
             />
           </span>
         </Col>
