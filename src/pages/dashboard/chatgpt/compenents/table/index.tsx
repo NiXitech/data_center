@@ -1,20 +1,20 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 // import { chatgpt } from '@/services/ant-design-pro/api'
-import { chatgpt, bot } from '@/services/socialapi/api';
+// import { chatgpt, bot } from '@/services/socialapi/api';
 // import { chatgpt } from '@/services/http/api'
 
 const ChatGpt = () => {
-  const [input, setInput] = useState<string>('');
-  const [output, setOutput] = useState<string>('');
+//   const [input, setInput] = useState<string>('');
+//   const [output, setOutput] = useState<string>('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
+//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setInput(e.target.value);
+//   };
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const reult = await bot();
-    console.log('嘿嘿嘿嘿嘿', reult);
+//   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     const reult = await bot();
+//     console.log('嘿嘿嘿嘿嘿', reult);
     // try {
     //     const { choices } = await chatgpt({
     //         prompt: input,
@@ -29,7 +29,7 @@ const ChatGpt = () => {
     //     console.error(error);
     //     // setOutput("Sorry, something went wrong.");
     // }
-  };
+//   };
 
   return (
     <div>
