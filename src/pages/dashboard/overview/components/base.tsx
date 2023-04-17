@@ -20,7 +20,7 @@ const BaseData = (props: propsType): JSX.Element => {
 
   const jisuanhuanbi = () => {
     // const yestoday_dau = Number(dataBase?.daily_dau?.pop()?.count);
-    if (dataBase.today_incr_count && Number(dataBase?.today_incr_count) === 0) {
+    if (dataBase?.today_incr_count && Number(dataBase?.today_incr_count) === 0) {
       setcircle_yestoday_count(0);
     } else {
       let percent =
@@ -30,7 +30,7 @@ const BaseData = (props: propsType): JSX.Element => {
     }
 
     const len = dataBase?.daily_dau?.length - 2
-    const minu_dau = Number(dataBase?.yesterday_dau) - Number(dataBase?.daily_dau[len]?.count);
+    const minu_dau = Number(dataBase.yesterday_dau ? dataBase.yesterday_dau : 0) - Number(dataBase.daily_dau ? dataBase.daily_dau[len]?.count : 0);
     if (minu_dau === 0) {
       setcircle_yestoday_dau(0);
     } else {
@@ -80,7 +80,7 @@ const BaseData = (props: propsType): JSX.Element => {
           <div className="card_title">昨日DAU</div>
           <span style={{ display: 'flex' }}>
             <Statistic
-              value={dataBase?.yesterday_dau}
+              value={dataBase.yesterday_dau ? dataBase.yesterday_dau : dataBase.today_dau}
               // formatter={(value) => formatter(Number(value))}
               valueStyle={cardStyle}
             />
@@ -121,7 +121,7 @@ const BaseData = (props: propsType): JSX.Element => {
             />
             <Statistic
               // title="环比昨日"
-              value={circle_yestoday_count}
+              value={circle_yestoday_count ? circle_yestoday_count : 0}
               precision={2}
               valueStyle={circle_yestoday_count >= 0 ? cardStyle_percent : cardStyle_percent_down}
               prefix={
@@ -141,8 +141,9 @@ const BaseData = (props: propsType): JSX.Element => {
           <div className="card_title">累计发邀请人数</div>
           <Statistic
             value={
+              dataBase?.referral?.length > 0 ?
               Number(dataBase?.referral[0]?.invite_user_cnt) +
-              Number(dataBase?.referral[1]?.invite_user_cnt)
+              Number(dataBase?.referral[1]?.invite_user_cnt) : 0
             }
             formatter={(value) => formatter(Number(value))}
             valueStyle={cardStyle}
@@ -154,8 +155,9 @@ const BaseData = (props: propsType): JSX.Element => {
           <Statistic
             // title="接受邀请人数"
             value={
+              dataBase?.referral?.length > 0 ? 
               Number(dataBase?.referral[0]?.invitee_user_cnt) +
-              Number(dataBase?.referral[1]?.invitee_user_cnt)
+              Number(dataBase?.referral[1]?.invitee_user_cnt) : 0
             }
             precision={2}
             valueStyle={cardStyle}

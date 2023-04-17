@@ -52,7 +52,7 @@ const TableView = (props: propsType): JSX.Element => {
             }}
           >
             <PlotsLine
-              data={getLast30DaysData(retentionData(props.dataBase.daily_retention))}
+              data={getLast30DaysData(retentionData(props.dataBase?.daily_retention || []))}
               Field={{ x: 'date', y: 'value' }}
               setting={{
                 seriesField: 'name',

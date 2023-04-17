@@ -1,16 +1,20 @@
-import _ from "lodash";
+import _ from 'lodash';
 
 export const formattedData = (list: [], xKey: string, yKey: string) => {
   const data: any[] = [];
-  list.forEach((ele: any) => {
-    ele[xKey] = typeof ele[xKey] === 'string'? ele[xKey]:JSON.stringify(ele[xKey]);
-    ele[yKey] = Number(ele[yKey]);
-    data.push(ele);
-  });
-  return data;
+  if(list && list.length>0) {
+    list.forEach((ele: any) => {
+      ele[xKey] = typeof ele[xKey] === 'string' ? ele[xKey] : JSON.stringify(ele[xKey]);
+      ele[yKey] = Number(ele[yKey]);
+      data.push(ele);
+    });
+    return data;
+  }else {
+    return []
+  }
 };
 
-function compareDate(a: { date: string | number | Date; }, b: { date: string | number | Date; }) {
+function compareDate(a: { date: string | number | Date }, b: { date: string | number | Date }) {
   const dateA = new Date(a.date);
   const dateB = new Date(b.date);
   if (dateA < dateB) {
@@ -21,7 +25,6 @@ function compareDate(a: { date: string | number | Date; }, b: { date: string | n
   }
   return 0;
 }
-
 
 export const retentionData = (list: []) => {
   const data: any[] = [];
@@ -41,9 +44,12 @@ export const retentionData = (list: []) => {
 
 // 最近30天数据
 export const getLast30DaysData = (sortedData: any[]) => {
-  const today = new Date();
-  const last30Days = new Date(today.setDate(today.getDate() - 30));
-  const last30DaysData = sortedData.filter((ele: any) => new Date(ele.date) >= last30Days);
-  return last30DaysData;
-}
-
+  if (sortedData && sortedData?.length > 0) {
+    const today = new Date();
+    const last30Days = new Date(today.setDate(today.getDate() - 30));
+    const last30DaysData = sortedData.filter((ele: any) => new Date(ele.date) >= last30Days);
+    return last30DaysData;
+  } else {
+    return [];
+  }
+};
